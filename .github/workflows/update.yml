@@ -2,15 +2,14 @@ name: Update Excel Data
 
 on:
   schedule:
-    # Запуск два раза в неделю (например, каждый понедельник и четверг в 8:00 UTC)
-    - cron: '0 8 * * 1,4'
-  workflow_dispatch: # Позволяет запускать обновление вручную кнопкой на сайте GitHub
+    - cron: '0 12 * * 0,1,2,3,6'
+  workflow_dispatch:
 
 jobs:
   update-data:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Даем права скрипту на сохранение изменений в репозиторий
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -18,7 +17,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Install dependencies
         run: npm install xlsx
