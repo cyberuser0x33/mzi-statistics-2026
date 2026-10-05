@@ -1,65 +1,203 @@
-index.html
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
-    <title>Актуальные данные из расписания</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; background: #f9f9f9; color: #333; }
-        table { width: 100%; border-collapse: collapse; background: #fff; margin-top: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
-        th { background-color: #007bff; color: white; }
-        tr:nth-child(even) { background-color: #f2f2f2; }
-    </style>
-</head>
-<body>
-    <h1>Данные из университетской таблицы</h1>
-    <p>Информация автоматически обновляется несколько раз в неделю.</p>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MZI - 2026</title>
 
-    <div id="table-container">Загрузка данных...</div>
+    <!-- Site Favicons -->
+    <link rel="icon" type="image/png" sizes="96x96" href="img/favicon-96x96.png">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    <link rel="manifest" href="img/site.webmanifest">
 
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        async function renderTable() {
-            try {
-                // Загружаем сгенерированный JSON-файл прямо из корня сайта
-                const response = await fetch('data.json');
-                if (!response.ok) throw new Error('Не удалось загрузить данные');
-
-                const data = await response.json();
-
-                if (data.length === 0) {
-                    document.getElementById('table-container').innerText = 'Таблица пуста.';
-                    return;
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0f172a'
+                    }
                 }
-
-                // Создаем HTML-таблицу на основе полученных ключей объекта
-                let html = '<table><thead><tr>';
-                const headers = Object.keys(data[0]);
-
-                headers.forEach(h => {
-                    html += <th>${h}</th>;
-                });
-                html += '</tr></thead><tbody>';
-
-                data.forEach(row => {
-                    html += '<tr>';
-                    headers.forEach(h => {
-                        html += <td>${row[h] !== undefined ? row[h] : ''}</td>;
-                    });
-                    html += '</tr>';
-                });
-
-                html += '</tbody></table>';
-                document.getElementById('table-container').innerHTML = html;
-
-            } catch (error) {
-                document.getElementById('table-container').innerText = 'Ошибка при загрузке данных: ' + error.message;
-                console.error(error);
             }
         }
-
-        renderTable();
     </script>
 
+    <!-- Chart.js CDN for Analytics Charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-darkBg text-slate-100 min-h-screen font-sans pb-12 antialiased">
+
+    <!-- Navigation Header -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center gap-4">
+            
+            <!-- Brand Section -->
+            <div class="flex items-center gap-3">
+                <img src="img/icon2.png" alt="Logo" class="w-9 h-9 object-contain rounded-xl sharp-img">
+                <div>
+                    <h1 class="text-lg font-bold bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent" data-i18n="appTitle">
+                        Some text
+                    </h1>
+                    <p class="text-[11px] text-slate-400" data-i18n="appSubtitle">Some text subtitle</p>
+                </div>
+            </div>
+
+            <!-- Controls: Search & Language Switcher -->
+            <div class="flex items-center gap-3">
+                <div class="relative hidden sm:block w-60">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                    <input type="text" id="search-input" placeholder="Search..." 
+                           class="w-full bg-slate-800 border border-slate-700 text-xs rounded-xl pl-8 pr-3 py-1.5 text-slate-200 focus:outline-none focus:border-sky-500 transition">
+                </div>
+
+                <!-- SK/RU Language Toggle -->
+                <div class="flex items-center bg-slate-800 p-1 rounded-xl border border-slate-700">
+                    <button class="lang-btn px-2.5 py-1 text-xs font-bold rounded-lg transition" data-lang="ru">RU</button>
+                    <button class="lang-btn px-2.5 py-1 text-xs font-bold rounded-lg transition" data-lang="sk">SK</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5">
+
+        <!-- Mobile Search Input -->
+        <div class="block sm:hidden mb-4">
+            <div class="relative w-full">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                <input type="text" id="search-input-mobile" placeholder="Search..." 
+                       class="w-full bg-slate-800 border border-slate-700 text-xs rounded-xl pl-8 pr-3 py-1.5 text-slate-200 focus:outline-none focus:border-sky-500 transition">
+            </div>
+        </div>
+
+        <!-- Two Column Grid Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+            <!-- LEFT COLUMN: Compact Single-column Student Cards -->
+            <div class="lg:col-span-2">
+                <div class="flex justify-between items-center mb-3 px-1">
+                    <h2 class="text-base font-semibold text-slate-200" data-i18n="studentsTitle">Zoznam účastníkov</h2>
+                    <span class="text-xs text-slate-400" id="showing-count">Zobrazené: 0</span>
+                </div>
+
+                <!-- Vertical Cards Container -->
+                <div id="students-container" class="flex flex-col gap-2">
+                    <div class="text-center py-12 text-slate-500">
+                        <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2"></i>
+                        <p class="text-xs">Loading data...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Analytics Charts & Leaderboard -->
+            <div class="flex flex-col gap-5">
+
+                <!-- 1. Weekly Analytics with Donut Charts -->
+                <div class="bg-slate-800/90 border border-slate-700/80 rounded-xl p-5 shadow-lg">
+                    <h3 class="text-lg font-bold text-white mb-4 flex items-center justify-between" data-i18n="statsTitle">
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-chart-pie text-sky-400"></i> Аналитика недели</span>
+                    </h3>
+
+                    <!-- KPI Cards -->
+                    <div class="grid grid-cols-2 gap-3 mb-5">
+                        <div class="bg-slate-900/60 p-3.5 rounded-lg border border-slate-700/50">
+                            <div class="text-xs text-slate-400 uppercase font-bold tracking-wide" data-i18n="statTotalStudents">Всего студентов</div>
+                            <div class="text-2xl font-black text-white mt-1" id="stat-total">0</div>
+                        </div>
+
+                        <div class="bg-slate-900/60 p-3.5 rounded-lg border border-slate-700/50">
+                            <div class="text-xs text-slate-400 uppercase font-bold tracking-wide" data-i18n="statAvgPoints">Ср. балл</div>
+                            <div class="text-2xl font-black text-sky-400 mt-1" id="stat-avg">0</div>
+                        </div>
+                    </div>
+
+                    <!-- Donut Charts Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-slate-700/60 pt-4">
+                        <!-- Chart 1: Perfect Score -->
+                        <div class="bg-slate-900/50 rounded-lg p-3.5 border border-slate-700/40 flex flex-col items-center">
+                            <div class="text-xs sm:text-sm font-bold text-emerald-400 uppercase mb-2 text-center" data-i18n="statPerfectScore">Все задачи на 3</div>
+                            <div class="relative w-32 h-32 my-1">
+                                <canvas id="chart-perfect"></canvas>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                                    <span class="text-base sm:text-lg font-black text-emerald-400 leading-tight" id="perfect-count-text">0</span>
+                                    <span class="text-base font-bold text-slate-300 font-mono leading-tight mt-0.5" id="perfect-percent-text">0%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chart 2: Low Score or Missing -->
+                        <div class="bg-slate-900/50 rounded-lg p-3.5 border border-slate-700/40 flex flex-col items-center">
+                            <div class="text-xs sm:text-sm font-bold text-red-400 uppercase mb-2 text-center" data-i18n="statLowScore">Баллы 0 или 1 / Пропуск</div>
+                            <div class="relative w-32 h-32 my-1">
+                                <canvas id="chart-low"></canvas>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                                    <span class="text-base sm:text-lg font-black text-red-400 leading-tight" id="low-count-text">0</span>
+                                    <span class="text-base font-bold text-slate-300 font-mono leading-tight mt-0.5" id="low-percent-text">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. NEW: Score Distribution Histogram (Bar Chart) -->
+                <div class="bg-slate-800/90 border border-slate-700/80 rounded-xl p-4 shadow-lg">
+                    <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2" data-i18n="scoreDistTitle">
+                        <i class="fa-solid fa-chart-column text-indigo-400"></i> Распределение баллов за неделю
+                    </h3>
+                    <div class="h-48 w-full">
+                        <canvas id="chart-score-dist"></canvas>
+                    </div>
+                </div>
+
+                <!-- 3. NEW: Weekly Trend Dynamics (Line Chart) -->
+                <div class="bg-slate-800/90 border border-slate-700/80 rounded-xl p-4 shadow-lg">
+                    <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2" data-i18n="weeklyTrendTitle">
+                        <i class="fa-solid fa-chart-line text-emerald-400"></i> Динамика среднего балла
+                    </h3>
+                    <div class="h-48 w-full">
+                        <canvas id="chart-weekly-trend"></canvas>
+                    </div>
+                </div>
+
+                <!-- 4. NEW: Program Comparison (Horizontal Bar Chart) -->
+                <div class="bg-slate-800/90 border border-slate-700/80 rounded-xl p-4 shadow-lg">
+                    <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2" data-i18n="programDistTitle">
+                        <i class="fa-solid fa-graduation-cap text-amber-400"></i> Ср. балл по программам
+                    </h3>
+                    <div class="h-48 w-full">
+                        <canvas id="chart-program-dist"></canvas>
+                    </div>
+                </div>
+
+                <!-- 5. Weekly Leaderboard Top 30 -->
+                <div class="bg-slate-800/90 border border-slate-700/80 rounded-xl p-4 shadow-lg">
+                    <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2" data-i18n="leaderboardTitle">
+                        <i class="fa-solid fa-trophy text-amber-400"></i> Топ-30 за неделю
+                    </h3>
+
+                    <div id="leaderboard-list" class="flex flex-col gap-1.5 max-h-[460px] overflow-y-auto pr-1">
+                        <!-- Top-30 dynamic rows -->
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Main JavaScript Application Logic -->
+    <script src="app.js"></script>
 </body>
 </html>
