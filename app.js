@@ -160,18 +160,16 @@ function updateLiveBrowserTime() {
     }
 }
 
-async function loadSyncDate(externalTime) {
+async function loadSyncDate() {
     const dict = i18n[currentLang];
     const excelUrl = 'https://ics.upjs.sk/~krajci/skola/vyucba/jesen/jesen-hodnotenie.xlsx';
 
-    if (externalTime) {
-        cachedSyncTime = externalTime;
-    } else if (cachedSyncTime === '---') {
+    if (cachedSyncTime === '---') {
         try {
             const res = await fetch(`sync.txt?t=${Date.now()}`);
             if (res.ok) {
                 const text = await res.text();
-                if (text && text.trim().length > 0) {
+                if (text && text.trim().length > 0 && !text.includes('<!DOCTYPE')) {
                     cachedSyncTime = text.trim();
                 }
             }
@@ -187,6 +185,42 @@ async function loadSyncDate(externalTime) {
         `;
     }
     updateLiveBrowserTime();
+}
+
+async function init() {
+    try {
+        setInterval(updateLiveBrowserTime, 500);
+
+        const response = await fetch(`data.json?t=${Date.now()}`);
+        if (!response.ok) throw new Error('Failed to load data.json');
+
+        const data = await response.json();
+
+        // Поддержка массива и объекта
+        if (Array.isArray(data)) {
+            allStudents = data;
+        } else {
+            allStudents = data.students || [];
+            if (data.lastSync) cachedSyncTime = data.lastSync;
+        }
+
+        await loadSyncDate();
+
+        activeWeekObj = detectLatestWeek(allStudents);
+
+        applyLanguage();
+        updateSidebarAndStats(allStudents);
+        renderStudents(allStudents);
+
+    } catch (err) {
+        console.error(err);
+        const dict = i18n[currentLang];
+        document.getElementById('students-container').innerHTML = `
+            <div class="text-center py-8 text-red-400 bg-red-500/10 rounded-xl border border-red-500/20">
+                <i class="fa-solid fa-triangle-exclamation text-2xl mb-1.5"></i>
+                <p class="text-xs">${dict.loadingError}: ${err.message}</p>
+            </div>`;
+    }
 }
 
 function openStudentModal(studentId) {

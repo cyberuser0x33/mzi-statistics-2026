@@ -43,7 +43,10 @@ async function parseExcel() {
             }
         });
 
-        // Время синхронизации по Братиславе
+        // Сохраняем чистый массив студентов
+        fs.writeFileSync('data.json', JSON.stringify(students, null, 2), 'utf-8');
+
+        // Время по Братиславе
         const now = new Date();
         const options = {
             timeZone: 'Europe/Bratislava',
@@ -55,16 +58,8 @@ async function parseExcel() {
         };
         const syncTimeStr = now.toLocaleString('en-GB', options).replace(',', '');
 
-        // Записываем и в sync.txt, и прямо в структурированный JSON
         fs.writeFileSync('sync.txt', syncTimeStr, 'utf-8');
-
-        const payload = {
-            lastSync: syncTimeStr,
-            students: students
-        };
-
-        fs.writeFileSync('data.json', JSON.stringify(payload, null, 2), 'utf-8');
-        console.log(`Данные сохранены! Студентов: ${students.length}, Время (Братислава): ${syncTimeStr}`);
+        console.log(`Успешно! Студентов: ${students.length}, Время: ${syncTimeStr}`);
 
     } catch (error) {
         console.error('Ошибка при обработке файла:', error);
