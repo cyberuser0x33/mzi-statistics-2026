@@ -3,9 +3,25 @@ const XLSX = require('xlsx');
 
 async function updateData() {
     const targetUrl = 'https://ics.upjs.sk/~krajci/skola/vyucba/jesen/jesen-hodnotenie.xlsx';
-    
+
     try {
-        console.log('Скачивание файла...');
+        console.log('Загрузка списка пользователей из users.txt...');
+        const usersRaw = fs.readFileSync('users.txt', 'utf-8');
+        
+        // Разбираем users.txt по строкам (Имя | Специальность)
+        const usersList = usersRaw
+            .split('\n')
+            .map(line => line.trim())
+            .filter(line => line.length > 0)
+            .map(line => {
+                const parts = line.split('|');
+                return {
+                    name: parts[0] ? parts[0].trim() : '',
+                    studyProgram: parts[1] ? parts[1].trim() : 'N/A'
+                };
+            });
+
+        console.log('Скачивание файла XLSX...');
         const response = await fetch(targetUrl, {
             headers: {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
@@ -20,15 +36,35 @@ async function updateData() {
         const workbook = XLSX.read(arrayBuffer, { type: 'array' });
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
+        
+        const rawJsonData = XLSX.utils.sheet_to_json(worksheet);
 
-        // Получаем точную исходную структуру XLSX
-        const jsonData = XLSX.utils.sheet_to_json(worksheet);
+        // Отбираем только строки студентов (где __EMPTY является числом 1, 2, ..., 121)
+        const studentRows = rawJsonData.filter(row => typeof row.__EMPTY === 'number');
 
-        // Сохраняем ровно тот массив, который ожидает фронтенд
-        fs.writeFileSync('data.json', JSON.stringify(jsonData, null, 2), 'utf-8');
-        console.log('Файл data.json успешно обновлен!');
+        // Сопоставляем порядок из .xlsx с порядком в users.txt
+        const resultData = studentRows.map((row, index) => {
+            const userMeta = usersList[index] || { name: 'Неизвестно', studyProgram: 'N/A' };
 
-        // Время синхронизации по Братиславе
+            return {
+                id: row.__EMPTY,
+                name: userMeta.name,
+                studyProgram: userMeta.studyProgram,
+                grade: row.známka || 'F',
+                totalPoints: row.spolu || 0,
+                homeworkPoints: row.body || 0,
+                lectureAttendance: row.prednášky || 0,
+                activityPoints: row.__EMPTY_27 || row.__EMPTY_3 || 0,
+                // Сохраняем исходные поля XLSX для работы с детальными заданиями по неделям
+                raw: row
+            };
+        });
+
+        // Сохраняем итоговый файл data.json в удобном для сайта формате
+        fs.writeFileSync('data.json', JSON.stringify(resultData, null, 2), 'utf-8');
+        console.log(`Успешно обработано ${resultData.length} записей студентов и сохранено в data.json!`);
+
+        // Записываем время синхронизации (по Братиславе) в файл sync.txt
         const now = new Date();
         const options = {
             timeZone: 'Europe/Bratislava',
@@ -41,10 +77,10 @@ async function updateData() {
         const syncTimeStr = now.toLocaleString('en-GB', options).replace(',', '');
         fs.writeFileSync('sync.txt', syncTimeStr, 'utf-8');
 
-        console.log(`Время синхронизации (Братислава): ${syncTimeStr}`);
+        console.log(`Дата синхронизации сохранена в sync.txt: ${syncTimeStr}`);
 
     } catch (error) {
-        console.error('Ошибка при обработке:', error.message);
+        console.error('Ошибка при обновлении:', error.message);
         process.exit(1);
     }
 }
