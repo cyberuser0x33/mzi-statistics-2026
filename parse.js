@@ -8,7 +8,7 @@ async function parseExcel() {
 
         const response = await fetch(url);
         if (!response.ok) {
-            throw new Error(`Не удалось загрузить файл: ${response.statusText}`);
+            throw new Error(`Не удалось загрузить файл: ${response.status} ${response.statusText}`);
         }
 
         const arrayBuffer = await response.arrayBuffer();
@@ -43,7 +43,11 @@ async function parseExcel() {
             }
         });
 
-        // Сохраняем чистый массив студентов
+        if (students.length === 0) {
+            throw new Error('Парсинг вернул 0 студентов! Проверьте данные.');
+        }
+
+        // Сохраняем массив студентов
         fs.writeFileSync('data.json', JSON.stringify(students, null, 2), 'utf-8');
 
         // Время по Братиславе
@@ -59,7 +63,7 @@ async function parseExcel() {
         const syncTimeStr = now.toLocaleString('en-GB', options).replace(',', '');
 
         fs.writeFileSync('sync.txt', syncTimeStr, 'utf-8');
-        console.log(`Успешно! Студентов: ${students.length}, Время: ${syncTimeStr}`);
+        console.log(`Успешно обновлено! Студентов: ${students.length}, Время: ${syncTimeStr}`);
 
     } catch (error) {
         console.error('Ошибка при обработке файла:', error);
