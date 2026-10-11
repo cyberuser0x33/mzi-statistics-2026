@@ -1,25 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
+
 <head>
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-WVH9NH4Z');</script>
-    <!-- End Google Tag Manager -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MZI - 2026</title>
 
-    <!-- Site Favicons -->
     <link rel="icon" type="image/png" sizes="96x96" href="img/favicon-96x96.png">
     <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
     <link rel="shortcut icon" href="img/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
     <link rel="manifest" href="img/site.webmanifest">
 
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -34,48 +26,46 @@
         }
     </script>
 
-    <!-- Chart.js CDN for Analytics Charts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-darkBg text-slate-100 min-h-screen font-sans pb-12 antialiased">
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WVH9NH4Z"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
 
-    <!-- Navigation Header -->
+<body class="bg-darkBg text-slate-100 min-h-screen font-sans pb-12 antialiased">
+
     <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center gap-4">
-            
-            <!-- Brand Section -->
+
             <div class="flex items-center gap-3">
                 <img src="img/icon2.png" alt="Logo" class="w-9 h-9 object-contain rounded-xl sharp-img">
                 <div>
-                    <h1 class="text-lg font-bold bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent" data-i18n="appTitle">
-                        Some text
-                    </h1>
-                    <p class="text-[11px] text-slate-400" data-i18n="appSubtitle">Some text subtitle</p>
+                    <div class="flex items-baseline gap-2 flex-wrap">
+                        <h1 class="text-lg font-bold bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent"
+                            data-i18n="appTitle">
+                            Статистика оценок MZI
+                        </h1>
+                        <span id="last-sync-container"
+                            class="text-xs text-sky-400/90 font-medium bg-sky-500/10 px-2 py-0.5 rounded border border-sky-500/20">
+                            <!-- Текст и ссылка вставляются динамически из app.js -->
+                        </span>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-0.5" data-i18n="appSubtitle">Some text subtitle</p>
                 </div>
             </div>
 
-            <!-- Controls: Search & Language Switcher -->
             <div class="flex items-center gap-3">
                 <div class="relative hidden sm:block w-60">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                    <input type="text" id="search-input" placeholder="Search..." 
-                           class="w-full bg-slate-800 border border-slate-700 text-xs rounded-xl pl-8 pr-3 py-1.5 text-slate-200 focus:outline-none focus:border-sky-500 transition">
+                    <i
+                        class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                    <input type="text" id="search-input" placeholder="Search..."
+                        class="w-full bg-slate-800 border border-slate-700 text-xs rounded-xl pl-8 pr-3 py-1.5 text-slate-200 focus:outline-none focus:border-sky-500 transition">
                 </div>
 
-                <!-- SK/RU Language Toggle -->
                 <div class="flex items-center bg-slate-800 p-1 rounded-xl border border-slate-700">
-                    <button class="lang-btn px-2.5 py-1 text-xs font-bold rounded-lg transition" data-lang="ru">RU</button>
-                    <button class="lang-btn px-2.5 py-1 text-xs font-bold rounded-lg transition" data-lang="sk">SK</button>
+                    <button class="lang-btn px-2.5 py-1 text-xs font-bold rounded-lg transition"
+                        data-lang="ru">RU</button>
+                    <button class="lang-btn px-2.5 py-1 text-xs font-bold rounded-lg transition"
+                        data-lang="sk">SK</button>
                 </div>
             </div>
         </div>
@@ -83,26 +73,23 @@
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5">
 
-        <!-- Mobile Search Input -->
         <div class="block sm:hidden mb-4">
             <div class="relative w-full">
-                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                <input type="text" id="search-input-mobile" placeholder="Search..." 
-                       class="w-full bg-slate-800 border border-slate-700 text-xs rounded-xl pl-8 pr-3 py-1.5 text-slate-200 focus:outline-none focus:border-sky-500 transition">
+                <i
+                    class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                <input type="text" id="search-input-mobile" placeholder="Search..."
+                    class="w-full bg-slate-800 border border-slate-700 text-xs rounded-xl pl-8 pr-3 py-1.5 text-slate-200 focus:outline-none focus:border-sky-500 transition">
             </div>
         </div>
 
-        <!-- Two Column Grid Layout -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-            <!-- LEFT COLUMN: Compact Single-column Student Cards -->
             <div class="lg:col-span-2">
                 <div class="flex justify-between items-center mb-3 px-1">
                     <h2 class="text-base font-semibold text-slate-200" data-i18n="studentsTitle">Zoznam účastníkov</h2>
                     <span class="text-xs text-slate-400" id="showing-count">Zobrazené: 0</span>
                 </div>
 
-                <!-- Vertical Cards Container -->
                 <div id="students-container" class="flex flex-col gap-2">
                     <div class="text-center py-12 text-slate-500">
                         <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2"></i>
@@ -111,57 +98,64 @@
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN: Analytics Charts & Leaderboard -->
             <div class="flex flex-col gap-5">
 
-                <!-- 1. Weekly Analytics with Donut Charts -->
                 <div class="bg-slate-800/90 border border-slate-700/80 rounded-xl p-5 shadow-lg">
-                    <h3 class="text-lg font-bold text-white mb-4 flex items-center justify-between" data-i18n="statsTitle">
-                        <span class="flex items-center gap-2"><i class="fa-solid fa-chart-pie text-sky-400"></i> Аналитика недели</span>
+                    <h3 class="text-lg font-bold text-white mb-4 flex items-center justify-between"
+                        data-i18n="statsTitle">
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-chart-pie text-sky-400"></i>
+                            Аналитика недели</span>
                     </h3>
 
-                    <!-- KPI Cards -->
                     <div class="grid grid-cols-2 gap-3 mb-5">
                         <div class="bg-slate-900/60 p-3.5 rounded-lg border border-slate-700/50">
-                            <div class="text-xs text-slate-400 uppercase font-bold tracking-wide" data-i18n="statTotalStudents">Всего студентов</div>
+                            <div class="text-xs text-slate-400 uppercase font-bold tracking-wide"
+                                data-i18n="statTotalStudents">Всего студентов</div>
                             <div class="text-2xl font-black text-white mt-1" id="stat-total">0</div>
                         </div>
 
                         <div class="bg-slate-900/60 p-3.5 rounded-lg border border-slate-700/50">
-                            <div class="text-xs text-slate-400 uppercase font-bold tracking-wide" data-i18n="statAvgPoints">Ср. балл</div>
+                            <div class="text-xs text-slate-400 uppercase font-bold tracking-wide"
+                                data-i18n="statAvgPoints">Ср. балл</div>
                             <div class="text-2xl font-black text-sky-400 mt-1" id="stat-avg">0</div>
                         </div>
                     </div>
 
-                    <!-- Donut Charts Grid -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-slate-700/60 pt-4">
-                        <!-- Chart 1: Perfect Score -->
-                        <div class="bg-slate-900/50 rounded-lg p-3.5 border border-slate-700/40 flex flex-col items-center">
-                            <div class="text-xs sm:text-sm font-bold text-emerald-400 uppercase mb-2 text-center" data-i18n="statPerfectScore">Все задачи на 3</div>
+                        <div
+                            class="bg-slate-900/50 rounded-lg p-3.5 border border-slate-700/40 flex flex-col items-center">
+                            <div class="text-xs sm:text-sm font-bold text-emerald-400 uppercase mb-2 text-center"
+                                data-i18n="statPerfectScore">Все задачи на 3</div>
                             <div class="relative w-32 h-32 my-1">
                                 <canvas id="chart-perfect"></canvas>
-                                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                                    <span class="text-base sm:text-lg font-black text-emerald-400 leading-tight" id="perfect-count-text">0</span>
-                                    <span class="text-base font-bold text-slate-300 font-mono leading-tight mt-0.5" id="perfect-percent-text">0%</span>
+                                <div
+                                    class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                                    <span class="text-base sm:text-lg font-black text-emerald-400 leading-tight"
+                                        id="perfect-count-text">0</span>
+                                    <span class="text-base font-bold text-slate-300 font-mono leading-tight mt-0.5"
+                                        id="perfect-percent-text">0%</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Chart 2: Low Score or Missing -->
-                        <div class="bg-slate-900/50 rounded-lg p-3.5 border border-slate-700/40 flex flex-col items-center">
-                            <div class="text-xs sm:text-sm font-bold text-red-400 uppercase mb-2 text-center" data-i18n="statLowScore">Баллы 0 или 1 / Пропуск</div>
+                        <div
+                            class="bg-slate-900/50 rounded-lg p-3.5 border border-slate-700/40 flex flex-col items-center">
+                            <div class="text-xs sm:text-sm font-bold text-red-400 uppercase mb-2 text-center"
+                                data-i18n="statLowScore">Баллы 0 или 1 / Пропуск</div>
                             <div class="relative w-32 h-32 my-1">
                                 <canvas id="chart-low"></canvas>
-                                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                                    <span class="text-base sm:text-lg font-black text-red-400 leading-tight" id="low-count-text">0</span>
-                                    <span class="text-base font-bold text-slate-300 font-mono leading-tight mt-0.5" id="low-percent-text">0%</span>
+                                <div
+                                    class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                                    <span class="text-base sm:text-lg font-black text-red-400 leading-tight"
+                                        id="low-count-text">0</span>
+                                    <span class="text-base font-bold text-slate-300 font-mono leading-tight mt-0.5"
+                                        id="low-percent-text">0%</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 2. NEW: Score Distribution Histogram (Bar Chart) -->
                 <div class="bg-slate-800/90 border border-slate-700/80 rounded-xl p-4 shadow-lg">
                     <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2" data-i18n="scoreDistTitle">
                         <i class="fa-solid fa-chart-column text-indigo-400"></i> Распределение баллов за неделю
@@ -171,7 +165,6 @@
                     </div>
                 </div>
 
-                <!-- 3. NEW: Weekly Trend Dynamics (Line Chart) -->
                 <div class="bg-slate-800/90 border border-slate-700/80 rounded-xl p-4 shadow-lg">
                     <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2" data-i18n="weeklyTrendTitle">
                         <i class="fa-solid fa-chart-line text-emerald-400"></i> Динамика среднего балла
@@ -181,7 +174,6 @@
                     </div>
                 </div>
 
-                <!-- 4. NEW: Program Comparison (Horizontal Bar Chart) -->
                 <div class="bg-slate-800/90 border border-slate-700/80 rounded-xl p-4 shadow-lg">
                     <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2" data-i18n="programDistTitle">
                         <i class="fa-solid fa-graduation-cap text-amber-400"></i> Ср. балл по программам
@@ -191,15 +183,11 @@
                     </div>
                 </div>
 
-                <!-- 5. Weekly Leaderboard Top 30 -->
                 <div class="bg-slate-800/90 border border-slate-700/80 rounded-xl p-4 shadow-lg">
                     <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2" data-i18n="leaderboardTitle">
-                        <i class="fa-solid fa-trophy text-amber-400"></i> Топ-30 за неделю
+                        <i class="fa-solid fa-trophy text-amber-400"></i> Топ за неделю
                     </h3>
-
-                    <div id="leaderboard-list" class="flex flex-col gap-1.5 max-h-[460px] overflow-y-auto pr-1">
-                        <!-- Top-30 dynamic rows -->
-                    </div>
+                    <div id="leaderboard-list" class="flex flex-col gap-1.5 max-h-[460px] overflow-y-auto pr-1"></div>
                 </div>
 
             </div>
@@ -208,7 +196,70 @@
 
     </main>
 
-    <!-- Main JavaScript Application Logic -->
+    <!-- Modal Window for Student Details -->
+    <div id="user-modal"
+        class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div
+            class="bg-slate-900 border border-slate-700/90 rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+
+            <!-- Modal Header -->
+            <div class="p-4 sm:p-5 border-b border-slate-800 flex justify-between items-center bg-slate-800/50">
+                <div>
+                    <span id="modal-user-program"
+                        class="text-[10px] font-bold text-sky-400 uppercase bg-sky-500/10 px-2 py-0.5 rounded border border-sky-500/20"></span>
+                    <h2 id="modal-user-name" class="text-lg font-bold text-white mt-1"></h2>
+                </div>
+                <button id="close-modal-btn"
+                    class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content -->
+            <div class="p-4 sm:p-6 overflow-y-auto space-y-5">
+
+                <!-- Overview Stats Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                    <div class="bg-slate-800/60 p-3 rounded-xl border border-slate-700/50 text-center">
+                        <div class="text-[10px] text-slate-400 uppercase font-semibold" data-i18n="totalLabel">ИТОГО
+                        </div>
+                        <div id="modal-total-points" class="text-lg font-bold text-sky-400 mt-0.5">0</div>
+                    </div>
+                    <div class="bg-slate-800/60 p-3 rounded-xl border border-slate-700/50 text-center">
+                        <div class="text-[10px] text-slate-400 uppercase font-semibold" data-i18n="lecturesLabel">ЛЕКЦИИ
+                        </div>
+                        <div id="modal-lecture-points" class="text-lg font-bold text-slate-200 mt-0.5">0</div>
+                    </div>
+                    <div class="bg-slate-800/60 p-3 rounded-xl border border-slate-700/50 text-center">
+                        <div class="text-[10px] text-slate-400 uppercase font-semibold" data-i18n="activityLabel">
+                            АКТИВНОСТЬ</div>
+                        <div id="modal-activity-points" class="text-lg font-bold text-slate-200 mt-0.5">0</div>
+                    </div>
+                    <div class="bg-emerald-500/10 p-3 rounded-xl border border-emerald-500/20 text-center col-span-1">
+                        <div class="text-[10px] text-emerald-400 uppercase font-semibold" data-i18n="modalCount3">Работы
+                            на 3</div>
+                        <div id="modal-count-3" class="text-lg font-bold text-emerald-400 mt-0.5">0</div>
+                    </div>
+                    <div
+                        class="bg-red-500/10 p-3 rounded-xl border border-red-500/20 text-center col-span-1 sm:col-span-2">
+                        <div class="text-[10px] text-red-400 uppercase font-semibold" data-i18n="modalCountLow">Не сдано
+                            / 0 / 1 балл</div>
+                        <div id="modal-count-low" class="text-lg font-bold text-red-400 mt-0.5">0</div>
+                    </div>
+                </div>
+
+                <!-- All Homework Weeks List -->
+                <div>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3"
+                        data-i18n="modalAllHomeworks">История выполнения всех работ</h3>
+                    <div id="modal-weeks-list" class="space-y-2"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <script src="app.js"></script>
 </body>
+
 </html>
