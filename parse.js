@@ -21,57 +21,14 @@ async function updateData() {
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
 
-        const rawData = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
-        
-        const students = [];
+        // Получаем точную исходную структуру XLSX
+        const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
-        rawData.forEach((row) => {
-            // Ищем колонку с ID студента (первое чисельное значение 1..999 в объекте)
-            const keys = Object.keys(row);
-            
-            // Находим ID (обычно первая или вторая колонка с числом)
-            const idKey = keys.find(k => {
-                const val = Number(row[k]);
-                return !isNaN(val) && val > 0 && val < 200 && String(row[k]).trim() !== '';
-            });
+        // Сохраняем ровно тот массив, который ожидает фронтенд
+        fs.writeFileSync('data.json', JSON.stringify(jsonData, null, 2), 'utf-8');
+        console.log('Файл data.json успешно обновлен!');
 
-            if (idKey) {
-                const numericId = Number(row[idKey]);
-                
-                // Имя идет в следующей колонке после ID
-                const idIndex = keys.indexOf(idKey);
-                const nameKey = keys[idIndex + 1];
-                const programKey = keys[idIndex + 2];
-                const totalKey = keys[idIndex + 3];
-
-                const studentName = nameKey && row[nameKey] ? String(row[nameKey]).trim() : '';
-                const studyProgram = programKey && row[programKey] ? String(row[programKey]).trim() : '';
-                const totalPoints = totalKey && row[totalKey] !== '' ? Number(row[totalKey]) : 0;
-
-                // Пропускаем строки шапки, если имя совпадает с техническими словами
-                if (studentName && studentName !== 'známka' && studentName !== 'AIS') {
-                    students.push({
-                        id: numericId,
-                        name: studentName,
-                        studyProgram: studyProgram,
-                        totalPoints: isNaN(totalPoints) ? 0 : totalPoints,
-                        lectureAttendance: Number(row['__EMPTY_35'] || 0),
-                        activityPoints: Number(row['__EMPTY_36'] || 0),
-                        raw: row
-                    });
-                }
-            }
-        });
-
-        if (students.length === 0) {
-            console.log('Пример первой строки для отладки:', rawData[0]);
-            throw new Error('Не удалось найти ни одного студента в файле Excel!');
-        }
-
-        // Сохраняем массив
-        fs.writeFileSync('data.json', JSON.stringify(students, null, 2), 'utf-8');
-
-        // Время по Братиславе
+        // Время синхронизации по Братиславе
         const now = new Date();
         const options = {
             timeZone: 'Europe/Bratislava',
@@ -84,7 +41,7 @@ async function updateData() {
         const syncTimeStr = now.toLocaleString('en-GB', options).replace(',', '');
         fs.writeFileSync('sync.txt', syncTimeStr, 'utf-8');
 
-        console.log(`Успешно! Сохранено студентов: ${students.length}, время: ${syncTimeStr}`);
+        console.log(`Время синхронизации (Братислава): ${syncTimeStr}`);
 
     } catch (error) {
         console.error('Ошибка при обработке:', error.message);
