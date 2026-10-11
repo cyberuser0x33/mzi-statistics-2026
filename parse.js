@@ -38,9 +38,12 @@ function parseExcel() {
                     const lectureAttendance = row['__EMPTY_35'];
                     const activityPoints = row['__EMPTY_36'];
 
-                    if (studentId && typeof studentId === 'number') {
+                    // Приводим ID к числу для надежной проверки
+                    const parsedId = Number(studentId);
+
+                    if (studentId !== '' && studentId !== undefined && !isNaN(parsedId) && parsedId > 0) {
                         students.push({
-                            id: studentId,
+                            id: parsedId,
                             name: studentName ? String(studentName).trim() : '',
                             studyProgram: studyProgram ? String(studyProgram).trim() : '',
                             totalPoints: totalPoints !== '' ? Number(totalPoints) : 0,
@@ -55,10 +58,8 @@ function parseExcel() {
                     throw new Error('Обработка завершена, но найдено 0 студентов!');
                 }
 
-                // Сохранение массива студентов в data.json
                 fs.writeFileSync('data.json', JSON.stringify(students, null, 2), 'utf-8');
 
-                // Формирование времени по Братиславе
                 const now = new Date();
                 const options = {
                     timeZone: 'Europe/Bratislava',
