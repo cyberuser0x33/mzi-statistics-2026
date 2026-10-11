@@ -21,43 +21,57 @@ async function updateData() {
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
 
-        // Получаем сырой массив объектов
         const rawData = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
         
         const students = [];
 
         rawData.forEach((row) => {
-            const studentId = row['__EMPTY_1'];
-            const studentName = row['__EMPTY_2'];
-            const studyProgram = row['__EMPTY_3'];
-            const totalPoints = row['__EMPTY_4'];
-            const lectureAttendance = row['__EMPTY_35'];
-            const activityPoints = row['__EMPTY_36'];
+            // Ищем колонку с ID студента (первое чисельное значение 1..999 в объекте)
+            const keys = Object.keys(row);
+            
+            // Находим ID (обычно первая или вторая колонка с числом)
+            const idKey = keys.find(k => {
+                const val = Number(row[k]);
+                return !isNaN(val) && val > 0 && val < 200 && String(row[k]).trim() !== '';
+            });
 
-            // Мягкая проверка ID: переводим в число и проверяем, что это не заголовок
-            const numericId = Number(studentId);
+            if (idKey) {
+                const numericId = Number(row[idKey]);
+                
+                // Имя идет в следующей колонке после ID
+                const idIndex = keys.indexOf(idKey);
+                const nameKey = keys[idIndex + 1];
+                const programKey = keys[idIndex + 2];
+                const totalKey = keys[idIndex + 3];
 
-            if (studentId !== '' && studentId !== undefined && !isNaN(numericId) && numericId > 0) {
-                students.push({
-                    id: numericId,
-                    name: studentName ? String(studentName).trim() : '',
-                    studyProgram: studyProgram ? String(studyProgram).trim() : '',
-                    totalPoints: totalPoints !== '' ? Number(totalPoints) : 0,
-                    lectureAttendance: lectureAttendance !== '' ? Number(lectureAttendance) : 0,
-                    activityPoints: activityPoints !== '' ? Number(activityPoints) : 0,
-                    raw: row
-                });
+                const studentName = nameKey && row[nameKey] ? String(row[nameKey]).trim() : '';
+                const studyProgram = programKey && row[programKey] ? String(row[programKey]).trim() : '';
+                const totalPoints = totalKey && row[totalKey] !== '' ? Number(row[totalKey]) : 0;
+
+                // Пропускаем строки шапки, если имя совпадает с техническими словами
+                if (studentName && studentName !== 'známka' && studentName !== 'AIS') {
+                    students.push({
+                        id: numericId,
+                        name: studentName,
+                        studyProgram: studyProgram,
+                        totalPoints: isNaN(totalPoints) ? 0 : totalPoints,
+                        lectureAttendance: Number(row['__EMPTY_35'] || 0),
+                        activityPoints: Number(row['__EMPTY_36'] || 0),
+                        raw: row
+                    });
+                }
             }
         });
 
         if (students.length === 0) {
+            console.log('Пример первой строки для отладки:', rawData[0]);
             throw new Error('Не удалось найти ни одного студента в файле Excel!');
         }
 
-        // Сохраняем массив студентов
+        // Сохраняем массив
         fs.writeFileSync('data.json', JSON.stringify(students, null, 2), 'utf-8');
 
-        // Генерируем время по Братиславе
+        // Время по Братиславе
         const now = new Date();
         const options = {
             timeZone: 'Europe/Bratislava',
@@ -70,7 +84,7 @@ async function updateData() {
         const syncTimeStr = now.toLocaleString('en-GB', options).replace(',', '');
         fs.writeFileSync('sync.txt', syncTimeStr, 'utf-8');
 
-        console.log(`Успешно! Сохранено студентов: ${students.length}, время (Братислава): ${syncTimeStr}`);
+        console.log(`Успешно! Сохранено студентов: ${students.length}, время: ${syncTimeStr}`);
 
     } catch (error) {
         console.error('Ошибка при обработке:', error.message);
