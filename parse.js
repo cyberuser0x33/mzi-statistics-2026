@@ -1,71 +1,71 @@
 const fs = require('fs');
 const XLSX = require('xlsx');
 
-async function updateData() {
-    const targetUrl = 'https://ics.upjs.sk/~krajci/skola/vyucba/jesen/jesen-hodnotenie.xlsx';
-
+async function parseExcel() {
     try {
-        const usersRaw = fs.readFileSync('users.txt', 'utf-8');
-        
-        const usersList = usersRaw
-            .split('\n')
-            .map(line => line.trim())
-            .filter(line => line.length > 0)
-            .map(line => {
-                const parts = line.split('|');
-                return {
-                    name: parts[0] ? parts[0].trim() : '',
-                    studyProgram: parts[1] ? parts[1].trim() : 'N/A'
-                };
-            });
+        const url = 'https://ics.upjs.sk/~krajci/skola/vyucba/jesen/jesen-hodnotenie.xlsx';
+        console.log(`Загрузка файла с ${url}...`);
 
-        const response = await fetch(targetUrl);
+        const response = await fetch(url);
         if (!response.ok) {
-            throw new Error(`Upload error: ${response.statusText}`);
+            throw new Error(`Не удалось загрузить файл: ${response.statusText}`);
         }
 
         const arrayBuffer = await response.arrayBuffer();
-        const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+        const buffer = Buffer.from(arrayBuffer);
+
+        const workbook = XLSX.read(buffer, { type: 'buffer' });
         const sheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[sheetName];
-        
-        const rawJsonData = XLSX.utils.sheet_to_json(worksheet);
-        const studentRows = rawJsonData.filter(row => typeof row.__EMPTY === 'number');
+        const sheet = workbook.Sheets[sheetName];
 
-        const resultData = studentRows.map((row, index) => {
-            const userMeta = usersList[index] || { name: 'Неизвестно', studyProgram: 'N/A' };
+        const rawData = XLSX.utils.sheet_to_json(sheet, { defval: '' });
 
-            return {
-                id: row.__EMPTY,
-                name: userMeta.name,
-                studyProgram: userMeta.studyProgram,
-                grade: row.známka || 'F',
-                totalPoints: row.spolu || 0,
-                homeworkPoints: row.body || 0,
-                lectureAttendance: row.prednášky || 0,
-                activityPoints: row.__EMPTY_27 || row.__EMPTY_3 || 0,
-                raw: row
-            };
+        const students = [];
+
+        rawData.forEach((row, index) => {
+            const studentId = row['__EMPTY_1'];
+            const studentName = row['__EMPTY_2'];
+            const studyProgram = row['__EMPTY_3'];
+            const totalPoints = row['__EMPTY_4'];
+            const lectureAttendance = row['__EMPTY_35'];
+            const activityPoints = row['__EMPTY_36'];
+
+            if (studentId && typeof studentId === 'number') {
+                students.push({
+                    id: studentId,
+                    name: studentName ? String(studentName).trim() : '',
+                    studyProgram: studyProgram ? String(studyProgram).trim() : '',
+                    totalPoints: totalPoints !== '' ? Number(totalPoints) : 0,
+                    lectureAttendance: lectureAttendance !== '' ? Number(lectureAttendance) : 0,
+                    activityPoints: activityPoints !== '' ? Number(activityPoints) : 0,
+                    raw: row
+                });
+            }
         });
 
-        fs.writeFileSync('data.json', JSON.stringify(resultData, null, 2), 'utf-8');
+        fs.writeFileSync('data.json', JSON.stringify(students, null, 2), 'utf-8');
+        console.log(`Данные успешно сохранены в data.json. Найдено студентов: ${students.length}`);
 
-        // Формирование времени синхронизации в формате: "11 Sep 10:00"
+        // Формирование времени синхронизации по локальному времени Братиславы (Europe/Bratislava)
         const now = new Date();
-        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        const day = now.getDate();
-        const month = months[now.getMonth()];
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const syncTimeStr = `${day} ${month} ${hours}:${minutes}`;
+        const options = {
+            timeZone: 'Europe/Bratislava',
+            day: 'numeric',
+            month: 'short',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        };
+        
+        const syncTimeStr = now.toLocaleString('en-GB', options).replace(',', '');
 
         fs.writeFileSync('sync.txt', syncTimeStr, 'utf-8');
-        console.log(`Успешно обновлено! Время синхронизации: ${syncTimeStr}`);
+        console.log(`Успешно обновлено! Время синхронизации (Братислава): ${syncTimeStr}`);
 
     } catch (error) {
-        console.error('Ошибка при обновлении:', error);
+        console.error('Ошибка при обработке файла:', error);
         process.exit(1);
     }
 }
 
-updateData();
+parseExcel();

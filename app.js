@@ -78,6 +78,7 @@ const WEEKS_MAPPING = [
 let allStudents = [];
 let activeWeekObj = WEEKS_MAPPING[0];
 let currentLang = localStorage.getItem('appLang') || 'ru';
+let cachedSyncTime = '---';
 
 let perfectChartInstance = null;
 let lowChartInstance = null;
@@ -144,7 +145,6 @@ function applyLanguage() {
     loadSyncDate();
 }
 
-// Форматирование текущего времени браузера в формате: "12 Oct 18:47:21"
 function updateLiveBrowserTime() {
     const now = new Date();
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -164,23 +164,27 @@ async function loadSyncDate() {
     const dict = i18n[currentLang];
     const excelUrl = 'https://ics.upjs.sk/~krajci/skola/vyucba/jesen/jesen-hodnotenie.xlsx';
 
-    try {
-        const res = await fetch('sync.txt');
-        let syncTime = '---';
-        if (res.ok) {
-            syncTime = (await res.text()).trim();
+    if (cachedSyncTime === '---') {
+        try {
+            const res = await fetch(`sync.txt?t=${Date.now()}`);
+            if (res.ok) {
+                const text = await res.text();
+                if (text && text.trim().length > 0) {
+                    cachedSyncTime = text.trim();
+                }
+            }
+        } catch (e) {
+            console.error('Sync date fetch error:', e);
         }
-
-        const container = document.getElementById('last-sync-container');
-        if (container) {
-            container.innerHTML = `
-                ${dict.lastSyncPrefix}<a href="${excelUrl}" target="_blank" rel="noopener noreferrer" class="underline hover:text-sky-300 transition-colors font-semibold">${dict.lastSyncFileLink}</a>: ${syncTime} | <i class="fa-regular fa-clock ml-1 text-slate-400"></i> <span id="live-browser-time" class="text-sky-300 font-mono font-bold">---</span>
-            `;
-        }
-        updateLiveBrowserTime();
-    } catch (e) {
-        console.error('Sync date fetch error:', e);
     }
+
+    const container = document.getElementById('last-sync-container');
+    if (container) {
+        container.innerHTML = `
+            ${dict.lastSyncPrefix}<a href="${excelUrl}" target="_blank" rel="noopener noreferrer" class="underline hover:text-sky-300 transition-colors font-semibold">${dict.lastSyncFileLink}</a>: ${cachedSyncTime} | <i class="fa-regular fa-clock ml-1 text-slate-400"></i> <span id="live-browser-time" class="text-sky-300 font-mono font-bold">---</span>
+        `;
+    }
+    updateLiveBrowserTime();
 }
 
 function openStudentModal(studentId) {
@@ -566,7 +570,7 @@ async function init() {
         await loadSyncDate();
         setInterval(updateLiveBrowserTime, 500);
 
-        const response = await fetch('data.json');
+        const response = await fetch(`data.json?t=${Date.now()}`);
         if (!response.ok) throw new Error('Failed to load data.json');
 
         allStudents = await response.json();
