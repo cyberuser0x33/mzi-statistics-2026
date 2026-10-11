@@ -27,7 +27,7 @@ function parseExcel() {
                 const sheetName = workbook.SheetNames[0];
                 const sheet = workbook.Sheets[sheetName];
 
-                // Читаем как массив массивов (строк) без привязки к заголовкам
+                // Читаем как массив массивов
                 const rawRows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
                 const rawObjects = XLSX.utils.sheet_to_json(sheet, { defval: '' });
 
@@ -35,21 +35,23 @@ function parseExcel() {
 
                 const students = [];
 
-                // Парсинг через поиск колонок по строкам
-                rawRows.forEach((rowArray, idx) => {
-                    if (!Array.isArray(rowArray) || rowArray.length < 2) return;
+                // Данные студентов начинаются с 4-й строки (индекс 3)
+                for (let idx = 3; idx < rawRows.length; idx++) {
+                    const rowArray = rawRows[idx];
+                    if (!Array.isArray(rowArray) || rowArray.length < 2) continue;
 
-                    const studentIdRaw = rowArray[1]; // Вторая колонка
+                    const studentIdRaw = rowArray[1]; // Колонка AIS (индекс 1)
                     const parsedId = Number(studentIdRaw);
 
-                    if (studentIdRaw !== '' && !isNaN(parsedId) && parsedId > 0 && parsedId < 1000) {
+                    // Проверяем, что в колонке AIS находится валидный ID студента
+                    if (studentIdRaw !== '' && studentIdRaw !== undefined && !isNaN(parsedId) && parsedId > 0) {
                         const studentName = rowArray[2] ? String(rowArray[2]).trim() : '';
                         const studyProgram = rowArray[3] ? String(rowArray[3]).trim() : '';
                         const totalPoints = rowArray[4] !== '' ? Number(rowArray[4]) : 0;
                         const lectureAttendance = rowArray[35] !== '' ? Number(rowArray[35]) : 0;
                         const activityPoints = rowArray[36] !== '' ? Number(rowArray[36]) : 0;
 
-                        // Находим соответствие с объектом raw
+                        // Находим соответствие для сырого объекта
                         const matchedRawObj = rawObjects.find(o => Number(o['__EMPTY_1']) === parsedId) || {};
 
                         students.push({
@@ -62,17 +64,16 @@ function parseExcel() {
                             raw: matchedRawObj
                         });
                     }
-                });
+                }
 
                 if (students.length === 0) {
-                    console.log('Пример первых 3 строк файла для отладки:', rawRows.slice(0, 3));
                     throw new Error('Обработка завершена, но найдено 0 студентов!');
                 }
 
-                // Сохранение в data.json
+                // Запись в data.json
                 fs.writeFileSync('data.json', JSON.stringify(students, null, 2), 'utf-8');
 
-                // Время по Братиславе
+                // Время по часовому поясу Братиславы
                 const now = new Date();
                 const options = {
                     timeZone: 'Europe/Bratislava',
@@ -85,7 +86,7 @@ function parseExcel() {
                 const syncTimeStr = now.toLocaleString('en-GB', options).replace(',', '');
                 fs.writeFileSync('sync.txt', syncTimeStr, 'utf-8');
 
-                console.log(`Успешно! Найдено студентов: ${students.length}, Время: ${syncTimeStr}`);
+                console.log(`Успешно! Найдено студентов: ${students.length}, Время (Братислава): ${syncTimeStr}`);
 
             } catch (err) {
                 console.error('Ошибка при распарсивании:', err.message);
