@@ -7,7 +7,6 @@ async function updateData() {
     try {
         const usersRaw = fs.readFileSync('users.txt', 'utf-8');
         
-        // Разбираем users.txt по строкам (Имя | Специальность)
         const usersList = usersRaw
             .split('\n')
             .map(line => line.trim())
@@ -31,11 +30,8 @@ async function updateData() {
         const worksheet = workbook.Sheets[sheetName];
         
         const rawJsonData = XLSX.utils.sheet_to_json(worksheet);
-
-        // Отбираем только строки студентов (где __EMPTY является числом 1, 2, ..., 121)
         const studentRows = rawJsonData.filter(row => typeof row.__EMPTY === 'number');
 
-        // Сопоставляем порядок из .xlsx с порядка в users.txt
         const resultData = studentRows.map((row, index) => {
             const userMeta = usersList[index] || { name: 'Неизвестно', studyProgram: 'N/A' };
 
@@ -48,14 +44,23 @@ async function updateData() {
                 homeworkPoints: row.body || 0,
                 lectureAttendance: row.prednášky || 0,
                 activityPoints: row.__EMPTY_27 || row.__EMPTY_3 || 0,
-                // Сохраняем исходные поля для работы с детальными заданиями по неделям
                 raw: row
             };
         });
 
-        // Записываем итоговый файл data.json
         fs.writeFileSync('data.json', JSON.stringify(resultData, null, 2), 'utf-8');
-        console.log(`Успешно обработано ${resultData.length} записей студентов и сохранено в data.json!`);
+
+        // Формирование времени синхронизации в формате: "11 Sep 10:00"
+        const now = new Date();
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const day = now.getDate();
+        const month = months[now.getMonth()];
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const syncTimeStr = `${day} ${month} ${hours}:${minutes}`;
+
+        fs.writeFileSync('sync.txt', syncTimeStr, 'utf-8');
+        console.log(`Успешно обновлено! Время синхронизации: ${syncTimeStr}`);
 
     } catch (error) {
         console.error('Ошибка при обновлении:', error);

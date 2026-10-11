@@ -3,3 +3,5 @@ mrg*
 .mrgignore
 package-lock.json
 package.json
+mrg-*.txt
+mrg-*/

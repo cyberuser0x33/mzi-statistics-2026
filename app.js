@@ -3,6 +3,8 @@ const i18n = {
     ru: {
         appTitle: "Статистика оценок MZI",
         appSubtitle: "От создателей 'The Holy Krajci Manuscript'. P.S сайт был написан в диком угаре, за пять копеек, корректность данных - НЕ гарантируется!!!",
+        lastSyncPrefix: "Дата синхронизации с ",
+        lastSyncFileLink: "файлом",
         searchInput: "Поиск по имени, ID или программе...",
         studentsTitle: "Список участников",
         showingCount: "Показано:",
@@ -14,18 +16,24 @@ const i18n = {
         scoreDistTitle: "Распределение баллов за неделю",
         weeklyTrendTitle: "Динамика среднего балла",
         programDistTitle: "Ср. балл по программам",
-        leaderboardTitle: "Топ-30 за неделю",
+        leaderboardTitle: "Топ за неделю",
         homeworkWeekLabel: "Д/З (Неделя",
         tasksLabel: "Задания 1 | 2 | 3",
         lecturesLabel: "ЛЕКЦИИ",
         activityLabel: "АКТИВНОСТЬ",
         totalLabel: "ИТОГО",
         noStudentsFound: "Студенты не найдены",
-        loadingError: "Ошибка загрузки данных"
+        loadingError: "Ошибка загрузки данных",
+        detailsBtn: "Детали",
+        modalCount3: "Работы на 3 балла",
+        modalCountLow: "Не сдано / 0 / 1 балл",
+        modalAllHomeworks: "История выполнения домашних работ"
     },
     sk: {
         appTitle: "Štatistika hodnotení MZI",
         appSubtitle: "Od tvorcov „The Holy Krajci Manuscript“. P.S. Správnosť údajov NIE je zaručená!!!",
+        lastSyncPrefix: "Dátum synchronizácie so ",
+        lastSyncFileLink: "súborom",
         searchInput: "Hľadať podľa mena, ID alebo programu...",
         studentsTitle: "Zoznam účastníkov",
         showingCount: "Zobrazené:",
@@ -37,18 +45,21 @@ const i18n = {
         scoreDistTitle: "Rozdelenie bodov za týždeň",
         weeklyTrendTitle: "Dynamika priemerného počtu bodov",
         programDistTitle: "Priemerný počet bodov podľa programu",
-        leaderboardTitle: "Top-30 za týždeň",
+        leaderboardTitle: "Týždenný top",
         homeworkWeekLabel: "DÚ (Týždeň",
         tasksLabel: "Úlohy 1 | 2 | 3",
         lecturesLabel: "PREDNÁŠKY",
         activityLabel: "AKTIVITA",
         totalLabel: "SPOLU",
         noStudentsFound: "Študenti neboli nájdení",
-        loadingError: "Chyba pri načítaní údajov"
+        loadingError: "Chyba pri načítaní údajov",
+        detailsBtn: "Detail",
+        modalCount3: "Úlohy na 3 body",
+        modalCountLow: "Neodovzdané / 0 / 1 bod",
+        modalAllHomeworks: "História vypracovania domácich úloh"
     }
 };
 
-// Weeks mapping configuration (Weeks 1 to 12)
 const WEEKS_MAPPING = [
     { week: 1, keys: ['__EMPTY_38', '__EMPTY_39', '__EMPTY_40'] },
     { week: 2, keys: ['__EMPTY_42', '__EMPTY_43', '__EMPTY_44'] },
@@ -68,14 +79,12 @@ let allStudents = [];
 let activeWeekObj = WEEKS_MAPPING[0];
 let currentLang = localStorage.getItem('appLang') || 'ru';
 
-// Chart instances storage
 let perfectChartInstance = null;
 let lowChartInstance = null;
 let scoreDistChartInstance = null;
 let weeklyTrendChartInstance = null;
 let programDistChartInstance = null;
 
-// Global Chart.js dark theme styling
 Chart.defaults.color = '#94a3b8';
 Chart.defaults.font.family = 'sans-serif';
 
@@ -101,9 +110,7 @@ function detectLatestWeek(students) {
             const raw = s.raw || {};
             return week.keys.some(k => raw[k] !== undefined && raw[k] !== null && raw[k] > 0);
         });
-        if (hasData) {
-            return week;
-        }
+        if (hasData) return week;
     }
     return WEEKS_MAPPING[0];
 }
@@ -133,9 +140,113 @@ function applyLanguage() {
             btn.classList.add('bg-slate-800', 'text-slate-400');
         }
     });
+
+    loadSyncDate();
 }
 
-// Render compact student cards with unified stats container for mobile optimization
+// Форматирование текущего времени браузера в формате: "12 Oct 18:47:21"
+function updateLiveBrowserTime() {
+    const now = new Date();
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const day = now.getDate();
+    const month = months[now.getMonth()];
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    const liveTimeElem = document.getElementById('live-browser-time');
+    if (liveTimeElem) {
+        liveTimeElem.innerText = `${day} ${month} ${hours}:${minutes}:${seconds}`;
+    }
+}
+
+async function loadSyncDate() {
+    const dict = i18n[currentLang];
+    const excelUrl = 'https://ics.upjs.sk/~krajci/skola/vyucba/jesen/jesen-hodnotenie.xlsx';
+
+    try {
+        const res = await fetch('sync.txt');
+        let syncTime = '---';
+        if (res.ok) {
+            syncTime = (await res.text()).trim();
+        }
+
+        const container = document.getElementById('last-sync-container');
+        if (container) {
+            container.innerHTML = `
+                ${dict.lastSyncPrefix}<a href="${excelUrl}" target="_blank" rel="noopener noreferrer" class="underline hover:text-sky-300 transition-colors font-semibold">${dict.lastSyncFileLink}</a>: ${syncTime} | <i class="fa-regular fa-clock ml-1 text-slate-400"></i> <span id="live-browser-time" class="text-sky-300 font-mono font-bold">---</span>
+            `;
+        }
+        updateLiveBrowserTime();
+    } catch (e) {
+        console.error('Sync date fetch error:', e);
+    }
+}
+
+function openStudentModal(studentId) {
+    const student = allStudents.find(s => s.id === studentId);
+    if (!student) return;
+
+    const dict = i18n[currentLang];
+    const raw = student.raw || {};
+
+    document.getElementById('modal-user-name').innerText = student.name;
+    document.getElementById('modal-user-program').innerText = student.studyProgram || 'N/A';
+    document.getElementById('modal-total-points').innerText = student.totalPoints ?? 0;
+    document.getElementById('modal-lecture-points').innerText = student.lectureAttendance ?? 0;
+    document.getElementById('modal-activity-points').innerText = student.activityPoints ?? 0;
+
+    const availableWeeks = WEEKS_MAPPING.filter(wObj => {
+        return allStudents.some(s => {
+            const r = s.raw || {};
+            return wObj.keys.some(k => r[k] !== undefined && r[k] !== null && r[k] !== '' && r[k] !== '-');
+        });
+    });
+
+    let count3 = 0;
+    let countLow = 0;
+
+    const weeksHtml = availableWeeks.map(wObj => {
+        const scores = wObj.keys.map(k => raw[k]);
+        
+        scores.forEach(s => {
+            if (s !== undefined && s !== null && s !== '' && s !== '-') {
+                const num = Number(s);
+                if (num === 3) count3++;
+                if (num <= 1) countLow++;
+            } else {
+                countLow++;
+            }
+        });
+
+        const badges = scores.map(s => {
+            const val = (s !== undefined && s !== null && s !== '') ? s : '-';
+            const style = getBadgeStyle(s);
+            return `<span class="w-6 h-6 rounded-full inline-flex items-center justify-center font-bold text-xs ${style}">${val}</span>`;
+        }).join(' ');
+
+        return `
+            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60">
+                <div class="flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-full bg-slate-700 border border-slate-600 text-sky-400 font-bold text-xs flex items-center justify-center font-mono">
+                        #${wObj.week}
+                    </span>
+                    <span class="text-xs text-slate-300 font-medium">${dict.homeworkWeekLabel} ${wObj.week})</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    ${badges}
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    document.getElementById('modal-count-3').innerText = count3;
+    document.getElementById('modal-count-low').innerText = countLow;
+    document.getElementById('modal-weeks-list').innerHTML = weeksHtml;
+
+    document.getElementById('user-modal').classList.remove('hidden');
+}
+
 function renderStudents(students) {
     const container = document.getElementById('students-container');
     const dict = i18n[currentLang];
@@ -162,25 +273,27 @@ function renderStudents(students) {
         }).join('');
 
         return `
-            <div class="bg-slate-800/90 border border-slate-700/80 hover:border-slate-600 rounded-xl p-3 transition duration-200 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-2.5 relative">
+            <div class="bg-slate-800/90 border border-slate-700/80 hover:border-slate-600 rounded-xl p-2.5 transition duration-200 shadow-sm flex flex-col gap-2">
                 
-                <!-- Header Info: Study Program & Student Name -->
-                <div class="flex flex-col gap-0.5 min-w-[160px]">
-                    <div class="flex items-center justify-between lg:justify-start gap-1.5">
-                        <span class="text-[10px] font-bold tracking-wider text-sky-400 uppercase bg-sky-500/10 px-1.5 py-0.5 rounded border border-sky-500/20">
+                <div class="flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-2 min-w-0">
+                        <span class="text-[10px] font-bold tracking-wider text-sky-400 uppercase bg-sky-500/10 px-1.5 py-0.5 rounded border border-sky-500/20 shrink-0">
                             ${student.studyProgram || 'N/A'}
                         </span>
-                        <span class="text-xs text-slate-400 font-mono font-bold">#${student.id}</span>
+                        <span class="text-xs text-slate-400 font-mono font-bold shrink-0">#${student.id}</span>
+                        <h3 class="text-sm font-bold text-white truncate">
+                            ${student.name}
+                        </h3>
                     </div>
-                    <h3 class="text-sm font-bold text-white mt-0.5 truncate">
-                        ${student.name}
-                    </h3>
+
+                    <button onclick="openStudentModal(${student.id})" class="bg-slate-700/80 hover:bg-sky-600 text-slate-200 hover:text-white px-2.5 py-1 rounded-lg transition flex items-center gap-1.5 text-xs font-semibold border border-slate-600/80 shrink-0">
+                        <i class="fa-solid fa-chart-user text-sky-400 hover:text-white"></i>
+                        <span>${dict.detailsBtn}</span>
+                    </button>
                 </div>
 
-                <!-- Unified Stats Container (Mobile-friendly: Homework + Lectures + Activity + Total) -->
-                <div class="bg-slate-900/70 rounded-lg p-2 border border-slate-700/50 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 flex-1">
+                <div class="bg-slate-900/70 rounded-lg p-2 border border-slate-700/50 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2">
                     
-                    <!-- Homework Section -->
                     <div class="flex items-center justify-between sm:justify-start gap-2.5 pr-0 sm:pr-2 border-b sm:border-b-0 sm:border-r border-slate-700/60 pb-2 sm:pb-0">
                         <div class="text-[11px] text-slate-300 font-medium leading-tight">
                             <div>${dict.homeworkWeekLabel} ${activeWeekObj.week})</div>
@@ -191,27 +304,21 @@ function renderStudents(students) {
                         </div>
                     </div>
 
-                    <!-- Extra Stats Section (Lectures, Activity, Total in one row) -->
                     <div class="grid grid-cols-3 gap-1.5 sm:flex sm:items-center sm:gap-2 sm:justify-end">
-                        
-                        <!-- Lectures -->
-                        <div class="bg-slate-800/60 rounded px-1.5 py-1 text-center min-w-[55px]">
+                        <div class="bg-slate-800/60 rounded px-1.5 py-1 text-center min-w-[50px]">
                             <div class="text-[8px] sm:text-[9px] text-slate-400 uppercase font-semibold truncate">${dict.lecturesLabel}</div>
                             <div class="text-xs font-bold text-slate-200 mt-0.5">${student.lectureAttendance ?? 0}</div>
                         </div>
 
-                        <!-- Activity -->
-                        <div class="bg-slate-800/60 rounded px-1.5 py-1 text-center min-w-[60px]">
+                        <div class="bg-slate-800/60 rounded px-1.5 py-1 text-center min-w-[55px]">
                             <div class="text-[8px] sm:text-[9px] text-slate-400 uppercase font-semibold truncate">${dict.activityLabel}</div>
                             <div class="text-xs font-bold text-slate-200 mt-0.5">${student.activityPoints ?? 0}</div>
                         </div>
 
-                        <!-- Total -->
-                        <div class="bg-sky-500/10 border border-sky-500/30 rounded px-1.5 py-1 text-center min-w-[60px]">
+                        <div class="bg-sky-500/10 border border-sky-500/30 rounded px-1.5 py-1 text-center min-w-[55px]">
                             <div class="text-[8px] sm:text-[9px] text-sky-400 uppercase font-bold truncate">${dict.totalLabel}</div>
                             <div class="text-xs font-bold text-sky-300 mt-0.5">${student.totalPoints ?? 0}</div>
                         </div>
-
                     </div>
 
                 </div>
@@ -241,16 +348,12 @@ function drawDonutChart(canvasId, value, total, color, instanceRef) {
             cutout: '74%',
             responsive: true,
             maintainAspectRatio: false,
-            plugins: {
-                tooltip: { enabled: false },
-                legend: { display: false }
-            },
+            plugins: { tooltip: { enabled: false }, legend: { display: false } },
             animation: { duration: 600 }
         }
     });
 }
 
-// 1. Гистограмма распределения баллов за неделю (Bar Chart)
 function renderScoreDistChart(students) {
     const ctx = document.getElementById('chart-score-dist').getContext('2d');
     const dist = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 };
@@ -268,11 +371,7 @@ function renderScoreDistChart(students) {
         type: 'bar',
         data: {
             labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-            datasets: [{
-                data: Object.values(dist),
-                backgroundColor: '#6366f1',
-                borderRadius: 4
-            }]
+            datasets: [{ data: Object.values(dist), backgroundColor: '#6366f1', borderRadius: 4 }]
         },
         options: {
             responsive: true,
@@ -286,10 +385,8 @@ function renderScoreDistChart(students) {
     });
 }
 
-// 2. Линейный график динамики по неделям (Line Chart)
 function renderWeeklyTrendChart(students) {
     const ctx = document.getElementById('chart-weekly-trend').getContext('2d');
-    
     const labels = [];
     const avgData = [];
 
@@ -301,8 +398,7 @@ function renderWeeklyTrendChart(students) {
             const raw = s.raw || {};
             const scores = wObj.keys.map(k => raw[k]).filter(v => v !== undefined && v !== null && v !== '');
             if (scores.length > 0) {
-                const sum = scores.reduce((a, b) => a + Number(b), 0);
-                weekSum += sum;
+                weekSum += scores.reduce((a, b) => a + Number(b), 0);
                 activeCount++;
             }
         });
@@ -341,7 +437,6 @@ function renderWeeklyTrendChart(students) {
     });
 }
 
-// 3. Диаграмма распределения по программам обучения (Horizontal Bar Chart)
 function renderProgramDistChart(students) {
     const ctx = document.getElementById('chart-program-dist').getContext('2d');
     const progMap = {};
@@ -351,9 +446,7 @@ function renderProgramDistChart(students) {
         const raw = s.raw || {};
         const sum = activeWeekObj.keys.reduce((acc, k) => acc + Number(raw[k] || 0), 0);
 
-        if (!progMap[prog]) {
-            progMap[prog] = { totalPoints: 0, count: 0 };
-        }
+        if (!progMap[prog]) progMap[prog] = { totalPoints: 0, count: 0 };
         progMap[prog].totalPoints += sum;
         progMap[prog].count += 1;
     });
@@ -367,11 +460,7 @@ function renderProgramDistChart(students) {
         type: 'bar',
         data: {
             labels: labels,
-            datasets: [{
-                data: avgScores,
-                backgroundColor: '#f59e0b',
-                borderRadius: 4
-            }]
+            datasets: [{ data: avgScores, backgroundColor: '#f59e0b', borderRadius: 4 }]
         },
         options: {
             indexAxis: 'y',
@@ -423,69 +512,60 @@ function updateSidebarAndStats(students) {
     document.getElementById('low-count-text').innerText = countLowScore;
     document.getElementById('low-percent-text').innerText = `${lowPercent}%`;
 
-    // Render Donut Charts
     perfectChartInstance = drawDonutChart('chart-perfect', countPerfectScore, totalCount, '#10b981', perfectChartInstance);
     lowChartInstance = drawDonutChart('chart-low', countLowScore, totalCount, '#ef4444', lowChartInstance);
 
-    // Render Additional Analytics Charts
     renderScoreDistChart(students);
     renderWeeklyTrendChart(students);
     renderProgramDistChart(students);
 
-    // Generate Top-30 Leaderboard
-    const leaderboardStudents = [...students].map(student => {
+    const topStudents = students.filter(student => {
         const raw = student.raw || {};
-        const scores = activeWeekObj.keys.map(k => {
-            const val = raw[k];
-            return (val !== undefined && val !== null && val !== '') ? Number(val) : 0;
-        });
-        
-        const count3 = scores.filter(s => s === 3).length;
-        const count2 = scores.filter(s => s === 2).length;
-        const count1 = scores.filter(s => s === 1).length;
-        const weeklySum = scores.reduce((a, b) => a + b, 0);
-
-        return { ...student, scores, count3, count2, count1, weeklySum };
+        const scores = activeWeekObj.keys.map(k => raw[k]);
+        return scores.length === 3 && scores.every(s => s !== undefined && s !== null && s !== '' && Number(s) === 3);
+    }).map(student => {
+        const raw = student.raw || {};
+        const scores = activeWeekObj.keys.map(k => Number(raw[k]));
+        return { ...student, scores };
     });
 
-    leaderboardStudents.sort((a, b) => {
-        if (a.count3 === 3 && b.count3 !== 3) return -1;
-        if (b.count3 === 3 && a.count3 !== 3) return 1;
+    topStudents.sort((a, b) => b.totalPoints - a.totalPoints);
 
-        if (a.count2 !== b.count2) return b.count2 - a.count2;
-        if (a.weeklySum !== b.weeklySum) return b.weeklySum - a.weeklySum;
-        return b.totalPoints - a.totalPoints;
-    });
-
-    const top30 = leaderboardStudents.slice(0, 30);
     const leaderboardContainer = document.getElementById('leaderboard-list');
 
-    leaderboardContainer.innerHTML = top30.map((s, index) => {
-        const scoresFormatted = s.scores.map(score => {
-            const style = getBadgeStyle(score);
-            return `<span class="w-5 h-5 rounded-full inline-flex items-center justify-center font-bold text-[10px] ${style}">${score}</span>`;
-        }).join('');
-
-        return `
-            <div class="flex items-center justify-between p-1.5 rounded-md bg-slate-900/50 border border-slate-700/40 text-xs">
-                <div class="flex items-center gap-2">
-                    <span class="w-4 font-bold font-mono ${index < 3 ? 'text-amber-400 text-xs' : 'text-slate-500 text-[11px]'}">
-                        #${index + 1}
-                    </span>
-                    <span class="font-semibold text-slate-200 truncate max-w-[120px]" title="${s.name}">
-                        ${s.name}
-                    </span>
-                </div>
-                <div class="flex items-center gap-1">
-                    ${scoresFormatted}
-                </div>
+    if (topStudents.length === 0) {
+        leaderboardContainer.innerHTML = `
+            <div class="text-center py-4 text-xs text-slate-500">
+                Нет студентов со всеми 3 баллами за эту неделю
             </div>
         `;
-    }).join('');
+    } else {
+        leaderboardContainer.innerHTML = topStudents.map((s, index) => {
+            const scoresFormatted = s.scores.map(score => {
+                const style = getBadgeStyle(score);
+                return `<span class="w-5 h-5 rounded-full inline-flex items-center justify-center font-bold text-[10px] ${style}">${score}</span>`;
+            }).join('');
+
+            return `
+                <div class="flex items-center justify-between p-1.5 rounded-md bg-slate-900/50 border border-slate-700/40 text-xs">
+                    <div class="flex items-center gap-2">
+                        <span class="w-4 font-bold font-mono ${index < 3 ? 'text-amber-400 text-xs' : 'text-slate-500 text-[11px]'}">
+                            #${index + 1}
+                        </span>
+                        <span class="font-semibold text-slate-200 truncate max-w-[120px]" title="${s.name}">${s.name}</span>
+                    </div>
+                    <div class="flex items-center gap-1">${scoresFormatted}</div>
+                </div>
+            `;
+        }).join('');
+    }
 }
 
 async function init() {
     try {
+        await loadSyncDate();
+        setInterval(updateLiveBrowserTime, 500);
+
         const response = await fetch('data.json');
         if (!response.ok) throw new Error('Failed to load data.json');
 
@@ -532,5 +612,15 @@ if (searchInput) searchInput.addEventListener('input', handleSearch);
 
 const searchInputMobile = document.getElementById('search-input-mobile');
 if (searchInputMobile) searchInputMobile.addEventListener('input', handleSearch);
+
+document.getElementById('close-modal-btn').addEventListener('click', () => {
+    document.getElementById('user-modal').classList.add('hidden');
+});
+
+document.getElementById('user-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'user-modal') {
+        document.getElementById('user-modal').classList.add('hidden');
+    }
+});
 
 document.addEventListener('DOMContentLoaded', init);
