@@ -22,7 +22,7 @@ async function parseExcel() {
 
         const students = [];
 
-        rawData.forEach((row, index) => {
+        rawData.forEach((row) => {
             const studentId = row['__EMPTY_1'];
             const studentName = row['__EMPTY_2'];
             const studyProgram = row['__EMPTY_3'];
@@ -43,10 +43,7 @@ async function parseExcel() {
             }
         });
 
-        fs.writeFileSync('data.json', JSON.stringify(students, null, 2), 'utf-8');
-        console.log(`Данные успешно сохранены в data.json. Найдено студентов: ${students.length}`);
-
-        // Формирование времени синхронизации по локальному времени Братиславы (Europe/Bratislava)
+        // Время синхронизации по Братиславе
         const now = new Date();
         const options = {
             timeZone: 'Europe/Bratislava',
@@ -56,11 +53,18 @@ async function parseExcel() {
             minute: '2-digit',
             hour12: false
         };
-        
         const syncTimeStr = now.toLocaleString('en-GB', options).replace(',', '');
 
+        // Записываем и в sync.txt, и прямо в структурированный JSON
         fs.writeFileSync('sync.txt', syncTimeStr, 'utf-8');
-        console.log(`Успешно обновлено! Время синхронизации (Братислава): ${syncTimeStr}`);
+
+        const payload = {
+            lastSync: syncTimeStr,
+            students: students
+        };
+
+        fs.writeFileSync('data.json', JSON.stringify(payload, null, 2), 'utf-8');
+        console.log(`Данные сохранены! Студентов: ${students.length}, Время (Братислава): ${syncTimeStr}`);
 
     } catch (error) {
         console.error('Ошибка при обработке файла:', error);

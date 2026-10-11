@@ -160,11 +160,13 @@ function updateLiveBrowserTime() {
     }
 }
 
-async function loadSyncDate() {
+async function loadSyncDate(externalTime) {
     const dict = i18n[currentLang];
     const excelUrl = 'https://ics.upjs.sk/~krajci/skola/vyucba/jesen/jesen-hodnotenie.xlsx';
 
-    if (cachedSyncTime === '---') {
+    if (externalTime) {
+        cachedSyncTime = externalTime;
+    } else if (cachedSyncTime === '---') {
         try {
             const res = await fetch(`sync.txt?t=${Date.now()}`);
             if (res.ok) {
@@ -567,13 +569,25 @@ function updateSidebarAndStats(students) {
 
 async function init() {
     try {
-        await loadSyncDate();
         setInterval(updateLiveBrowserTime, 500);
 
         const response = await fetch(`data.json?t=${Date.now()}`);
         if (!response.ok) throw new Error('Failed to load data.json');
 
-        allStudents = await response.json();
+        const data = await response.json();
+
+        if (Array.isArray(data)) {
+            allStudents = data;
+            await loadSyncDate();
+        } else {
+            allStudents = data.students || [];
+            if (data.lastSync) {
+                await loadSyncDate(data.lastSync);
+            } else {
+                await loadSyncDate();
+            }
+        }
+
         activeWeekObj = detectLatestWeek(allStudents);
 
         applyLanguage();
