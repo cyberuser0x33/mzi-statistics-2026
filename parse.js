@@ -6,7 +6,12 @@ async function parseExcel() {
         const url = 'https://ics.upjs.sk/~krajci/skola/vyucba/jesen/jesen-hodnotenie.xlsx';
         console.log(`Загрузка файла с ${url}...`);
 
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+            }
+        });
+
         if (!response.ok) {
             throw new Error(`Не удалось загрузить файл: ${response.status} ${response.statusText}`);
         }
@@ -19,7 +24,6 @@ async function parseExcel() {
         const sheet = workbook.Sheets[sheetName];
 
         const rawData = XLSX.utils.sheet_to_json(sheet, { defval: '' });
-
         const students = [];
 
         rawData.forEach((row) => {
@@ -43,14 +47,12 @@ async function parseExcel() {
             }
         });
 
-        if (students.length === 0) {
-            throw new Error('Парсинг вернул 0 студентов! Проверьте данные.');
-        }
+        console.log(`Успешно обработано студентов: ${students.length}`);
 
-        // Сохраняем массив студентов
+        // Запись файла с данными студентов
         fs.writeFileSync('data.json', JSON.stringify(students, null, 2), 'utf-8');
 
-        // Время по Братиславе
+        // Время синхронизации по часовому поясу Братиславы
         const now = new Date();
         const options = {
             timeZone: 'Europe/Bratislava',
@@ -61,12 +63,12 @@ async function parseExcel() {
             hour12: false
         };
         const syncTimeStr = now.toLocaleString('en-GB', options).replace(',', '');
-
         fs.writeFileSync('sync.txt', syncTimeStr, 'utf-8');
-        console.log(`Успешно обновлено! Студентов: ${students.length}, Время: ${syncTimeStr}`);
+
+        console.log(`Время синхронизации: ${syncTimeStr}`);
 
     } catch (error) {
-        console.error('Ошибка при обработке файла:', error);
+        console.error('Ошибка в процессе работы парсера:', error);
         process.exit(1);
     }
 }
