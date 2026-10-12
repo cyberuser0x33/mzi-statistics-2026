@@ -4,7 +4,7 @@ Matvii Biliakovskyi | 1AIb1
 Vladyslav Bokhonko | 1Ib1
 Artem Bondarenko | 1ADUIb1
 Luka Bryl | 1AIb1
-Vira Bystrova |
+Vira Bystrova | 1AIb1
 Mária Čabalová | 1BASInfb1
 Jakub Černay | 1AIb1
 Artur Danilin | 1AIb1
@@ -51,9 +51,9 @@ Alžbeta Kurimská | 1Ib1
 Arsenii Kurochka | 1AIb1
 Oleksandr Kyianytskyi | 2AIb1
 Patrik Laczkó | 1AIb1
-Minh Duc Le Viet | 1AIb1
 Michal Lengyel | 2ADUIb1
 Stanislav Levchyk | 2AIb1
+Minh Duc Le Viet | 1AIb1
 Volodymyr Loboda | 1MIb1
 Faisal Mahfoud | 2AIb1
 Šimon Maňko | 1ADUIb1
@@ -66,13 +66,13 @@ Artem Osadchuk | 2AIb1
 Mykola Osovskyi | 1AIb1
 Liubomyr Paklikovskyi | 1AIb1
 Martin Palúš | 1AIb1
-Ing. Jana Pastorová | 1ADUIb1
+Jana Pastorová | 1ADUIb1
 Oleksii Pavlyk | 1ADUIb1
 Maximilián Rastislav Petrič | 1AIb1
 Katarína Petrufová | 1ADUIb1
 Slavomír Petrus | 1AIb1
 Yuliya Pilipionak | 1ADUIb1
-Richard Pjeľčák 
+Richard Pjeľčák | 1AIb1
 Rostyslav Pohiba | 1ADUIb1
 Bohdan Polianskyi | 1AIb1
 Sarah Adriana Poprocká | 1AIb1
@@ -80,7 +80,7 @@ Oleksii Prokopovych | 1ADUIb1
 Kristián Pučko | 1AIb1
 Illia Pyvovar | 1ADUIb1
 Timofiei Riabych | 2AIb1
-Dávid Rim | 1AIb1 
+Dávid Rim | 1AIb1
 Artem Rudenko | 1Ib1
 Laura Sabolová | 1ADUIb1
 Maksym Sahun | 2AIb1

@@ -6,7 +6,7 @@
     "grade": "F",
     "totalPoints": 21,
     "homeworkPoints": 15,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 1,
@@ -46,7 +46,7 @@
     "grade": "F",
     "totalPoints": 15,
     "homeworkPoints": 9,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 2,
@@ -86,7 +86,7 @@
     "grade": "F",
     "totalPoints": 23,
     "homeworkPoints": 17,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 3,
@@ -126,7 +126,7 @@
     "grade": "F",
     "totalPoints": 22,
     "homeworkPoints": 17,
-    "lectureAttendance": 0,
+    "lectureAttendance": 4,
     "activityPoints": 1,
     "raw": {
       "__EMPTY": 4,
@@ -167,7 +167,7 @@
     "grade": "F",
     "totalPoints": 4,
     "homeworkPoints": 0,
-    "lectureAttendance": 2,
+    "lectureAttendance": 4,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 5,
@@ -201,7 +201,7 @@
     "grade": "F",
     "totalPoints": 21,
     "homeworkPoints": 15,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 6,
@@ -237,7 +237,7 @@
   {
     "id": 7,
     "name": "Vira Bystrova",
-    "studyProgram": "N/A",
+    "studyProgram": "1AIb1",
     "grade": "F",
     "totalPoints": 0,
     "homeworkPoints": 0,
@@ -275,7 +275,7 @@
     "grade": "F",
     "totalPoints": 23,
     "homeworkPoints": 17,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 8,
@@ -315,7 +315,7 @@
     "grade": "F",
     "totalPoints": 19,
     "homeworkPoints": 13,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 9,
@@ -355,7 +355,7 @@
     "grade": "F",
     "totalPoints": 20,
     "homeworkPoints": 14,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 10,
@@ -395,7 +395,7 @@
     "grade": "F",
     "totalPoints": 21,
     "homeworkPoints": 15,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 11,
@@ -435,7 +435,7 @@
     "grade": "F",
     "totalPoints": 15,
     "homeworkPoints": 9,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 12,
@@ -509,7 +509,7 @@
     "grade": "F",
     "totalPoints": 20,
     "homeworkPoints": 14,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 14,
@@ -549,7 +549,7 @@
     "grade": "F",
     "totalPoints": 22,
     "homeworkPoints": 14,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 2,
     "raw": {
       "__EMPTY": 15,
@@ -591,8 +591,8 @@
     "grade": "F",
     "totalPoints": 21,
     "homeworkPoints": 12,
-    "lectureAttendance": 2,
-    "activityPoints": 1,
+    "lectureAttendance": 6,
+    "activityPoints": 3,
     "raw": {
       "__EMPTY": 16,
       "známka": "F",
@@ -634,7 +634,7 @@
     "grade": "F",
     "totalPoints": 20,
     "homeworkPoints": 14,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 17,
@@ -674,7 +674,7 @@
     "grade": "F",
     "totalPoints": 13,
     "homeworkPoints": 7,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 18,
@@ -711,7 +711,7 @@
     "grade": "F",
     "totalPoints": 20,
     "homeworkPoints": 14,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 19,
@@ -751,7 +751,7 @@
     "grade": "F",
     "totalPoints": 26,
     "homeworkPoints": 20,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 20,
@@ -791,8 +791,8 @@
     "grade": "F",
     "totalPoints": 21,
     "homeworkPoints": 12,
-    "lectureAttendance": 2,
-    "activityPoints": 1,
+    "lectureAttendance": 6,
+    "activityPoints": 3,
     "raw": {
       "__EMPTY": 21,
       "známka": "F",
@@ -834,7 +834,7 @@
     "grade": "F",
     "totalPoints": 11,
     "homeworkPoints": 7,
-    "lectureAttendance": 2,
+    "lectureAttendance": 4,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 22,
@@ -871,7 +871,7 @@
     "grade": "F",
     "totalPoints": 26,
     "homeworkPoints": 20,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 23,
@@ -911,7 +911,7 @@
     "grade": "F",
     "totalPoints": 26,
     "homeworkPoints": 20,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 24,
@@ -951,7 +951,7 @@
     "grade": "F",
     "totalPoints": 4,
     "homeworkPoints": 0,
-    "lectureAttendance": 2,
+    "lectureAttendance": 4,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 25,
@@ -985,7 +985,7 @@
     "grade": "F",
     "totalPoints": 25,
     "homeworkPoints": 17,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 2,
     "raw": {
       "__EMPTY": 26,
@@ -1027,7 +1027,7 @@
     "grade": "F",
     "totalPoints": 14,
     "homeworkPoints": 8,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 27,
@@ -1067,7 +1067,7 @@
     "grade": "F",
     "totalPoints": 22,
     "homeworkPoints": 16,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 28,
@@ -1107,7 +1107,7 @@
     "grade": "F",
     "totalPoints": 23,
     "homeworkPoints": 17,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 29,
@@ -1181,7 +1181,7 @@
     "grade": "F",
     "totalPoints": 19,
     "homeworkPoints": 13,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 31,
@@ -1221,7 +1221,7 @@
     "grade": "F",
     "totalPoints": 20,
     "homeworkPoints": 14,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 32,
@@ -1261,7 +1261,7 @@
     "grade": "F",
     "totalPoints": 21,
     "homeworkPoints": 15,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 33,
@@ -1301,7 +1301,7 @@
     "grade": "F",
     "totalPoints": 6,
     "homeworkPoints": 0,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 34,
@@ -1335,7 +1335,7 @@
     "grade": "F",
     "totalPoints": 23,
     "homeworkPoints": 17,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 35,
@@ -1375,7 +1375,7 @@
     "grade": "F",
     "totalPoints": 21,
     "homeworkPoints": 15,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 36,
@@ -1449,7 +1449,7 @@
     "grade": "F",
     "totalPoints": 24,
     "homeworkPoints": 17,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 1,
     "raw": {
       "__EMPTY": 38,
@@ -1490,7 +1490,7 @@
     "grade": "F",
     "totalPoints": 24,
     "homeworkPoints": 18,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 39,
@@ -1530,7 +1530,7 @@
     "grade": "F",
     "totalPoints": 25,
     "homeworkPoints": 18,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 1,
     "raw": {
       "__EMPTY": 40,
@@ -1571,7 +1571,7 @@
     "grade": "F",
     "totalPoints": 27,
     "homeworkPoints": 20,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 1,
     "raw": {
       "__EMPTY": 41,
@@ -1612,8 +1612,8 @@
     "grade": "F",
     "totalPoints": 18,
     "homeworkPoints": 9,
-    "lectureAttendance": 2,
-    "activityPoints": 1,
+    "lectureAttendance": 6,
+    "activityPoints": 3,
     "raw": {
       "__EMPTY": 42,
       "známka": "F",
@@ -1655,7 +1655,7 @@
     "grade": "F",
     "totalPoints": 20,
     "homeworkPoints": 14,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 43,
@@ -1695,7 +1695,7 @@
     "grade": "F",
     "totalPoints": 24,
     "homeworkPoints": 18,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 44,
@@ -1735,8 +1735,8 @@
     "grade": "F",
     "totalPoints": 24,
     "homeworkPoints": 16,
-    "lectureAttendance": 2,
-    "activityPoints": 1,
+    "lectureAttendance": 6,
+    "activityPoints": 2,
     "raw": {
       "__EMPTY": 45,
       "známka": "F",
@@ -1777,7 +1777,7 @@
     "grade": "F",
     "totalPoints": 9,
     "homeworkPoints": 5,
-    "lectureAttendance": 2,
+    "lectureAttendance": 4,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 46,
@@ -1814,7 +1814,7 @@
     "grade": "F",
     "totalPoints": 10,
     "homeworkPoints": 6,
-    "lectureAttendance": 2,
+    "lectureAttendance": 4,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 47,
@@ -1851,7 +1851,7 @@
     "grade": "F",
     "totalPoints": 26,
     "homeworkPoints": 20,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 48,
@@ -1891,7 +1891,7 @@
     "grade": "F",
     "totalPoints": 23,
     "homeworkPoints": 17,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 49,
@@ -1931,8 +1931,8 @@
     "grade": "F",
     "totalPoints": 28,
     "homeworkPoints": 20,
-    "lectureAttendance": 2,
-    "activityPoints": 1,
+    "lectureAttendance": 6,
+    "activityPoints": 2,
     "raw": {
       "__EMPTY": 50,
       "známka": "F",
@@ -1973,7 +1973,7 @@
     "grade": "F",
     "totalPoints": 20,
     "homeworkPoints": 14,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 51,
@@ -2013,7 +2013,7 @@
     "grade": "F",
     "totalPoints": 19,
     "homeworkPoints": 12,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 1,
     "raw": {
       "__EMPTY": 52,
@@ -2054,7 +2054,7 @@
     "grade": "F",
     "totalPoints": 19,
     "homeworkPoints": 13,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 53,
@@ -2089,12 +2089,12 @@
   },
   {
     "id": 54,
-    "name": "Minh Duc Le Viet",
-    "studyProgram": "1AIb1",
+    "name": "Michal Lengyel",
+    "studyProgram": "2ADUIb1",
     "grade": "F",
     "totalPoints": 17,
     "homeworkPoints": 13,
-    "lectureAttendance": 2,
+    "lectureAttendance": 4,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 54,
@@ -2129,13 +2129,13 @@
   },
   {
     "id": 55,
-    "name": "Michal Lengyel",
-    "studyProgram": "2ADUIb1",
+    "name": "Stanislav Levchyk",
+    "studyProgram": "2AIb1",
     "grade": "F",
     "totalPoints": 27,
     "homeworkPoints": 18,
-    "lectureAttendance": 2,
-    "activityPoints": 1,
+    "lectureAttendance": 6,
+    "activityPoints": 3,
     "raw": {
       "__EMPTY": 55,
       "známka": "F",
@@ -2172,12 +2172,12 @@
   },
   {
     "id": 56,
-    "name": "Stanislav Levchyk",
-    "studyProgram": "2AIb1",
+    "name": "Minh Duc Le Viet",
+    "studyProgram": "1AIb1",
     "grade": "F",
     "totalPoints": 26,
     "homeworkPoints": 20,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 56,
@@ -2251,7 +2251,7 @@
     "grade": "F",
     "totalPoints": 15,
     "homeworkPoints": 11,
-    "lectureAttendance": 2,
+    "lectureAttendance": 4,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 58,
@@ -2291,7 +2291,7 @@
     "grade": "F",
     "totalPoints": 24,
     "homeworkPoints": 18,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 59,
@@ -2331,8 +2331,8 @@
     "grade": "F",
     "totalPoints": 19,
     "homeworkPoints": 11,
-    "lectureAttendance": 2,
-    "activityPoints": 1,
+    "lectureAttendance": 6,
+    "activityPoints": 2,
     "raw": {
       "__EMPTY": 60,
       "známka": "F",
@@ -2373,7 +2373,7 @@
     "grade": "F",
     "totalPoints": 23,
     "homeworkPoints": 17,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 61,
@@ -2413,7 +2413,7 @@
     "grade": "F",
     "totalPoints": 22,
     "homeworkPoints": 16,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 62,
@@ -2453,7 +2453,7 @@
     "grade": "F",
     "totalPoints": 11,
     "homeworkPoints": 5,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 63,
@@ -2490,7 +2490,7 @@
     "grade": "F",
     "totalPoints": 22,
     "homeworkPoints": 16,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 64,
@@ -2530,7 +2530,7 @@
     "grade": "F",
     "totalPoints": 20,
     "homeworkPoints": 14,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 65,
@@ -2570,7 +2570,7 @@
     "grade": "F",
     "totalPoints": 12,
     "homeworkPoints": 6,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 66,
@@ -2607,7 +2607,7 @@
     "grade": "F",
     "totalPoints": 24,
     "homeworkPoints": 18,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 67,
@@ -2647,8 +2647,8 @@
     "grade": "F",
     "totalPoints": 16,
     "homeworkPoints": 10,
-    "lectureAttendance": 2,
-    "activityPoints": 1,
+    "lectureAttendance": 4,
+    "activityPoints": 2,
     "raw": {
       "__EMPTY": 68,
       "známka": "F",
@@ -2681,13 +2681,13 @@
   },
   {
     "id": 69,
-    "name": "Ing. Jana Pastorová",
+    "name": "Jana Pastorová",
     "studyProgram": "1ADUIb1",
     "grade": "F",
     "totalPoints": 26,
     "homeworkPoints": 17,
-    "lectureAttendance": 2,
-    "activityPoints": 1,
+    "lectureAttendance": 6,
+    "activityPoints": 3,
     "raw": {
       "__EMPTY": 69,
       "známka": "F",
@@ -2729,7 +2729,7 @@
     "grade": "F",
     "totalPoints": 12,
     "homeworkPoints": 6,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 70,
@@ -2766,7 +2766,7 @@
     "grade": "F",
     "totalPoints": 24,
     "homeworkPoints": 18,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 71,
@@ -2806,7 +2806,7 @@
     "grade": "F",
     "totalPoints": 24,
     "homeworkPoints": 18,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 72,
@@ -2846,7 +2846,7 @@
     "grade": "F",
     "totalPoints": 18,
     "homeworkPoints": 12,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 73,
@@ -2886,7 +2886,7 @@
     "grade": "F",
     "totalPoints": 26,
     "homeworkPoints": 20,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 74,
@@ -2922,7 +2922,7 @@
   {
     "id": 75,
     "name": "Richard Pjeľčák",
-    "studyProgram": "N/A",
+    "studyProgram": "1AIb1",
     "grade": "F",
     "totalPoints": 0,
     "homeworkPoints": 0,
@@ -2960,7 +2960,7 @@
     "grade": "F",
     "totalPoints": 18,
     "homeworkPoints": 12,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 76,
@@ -3000,7 +3000,7 @@
     "grade": "F",
     "totalPoints": 22,
     "homeworkPoints": 16,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 77,
@@ -3040,7 +3040,7 @@
     "grade": "F",
     "totalPoints": 16,
     "homeworkPoints": 12,
-    "lectureAttendance": 2,
+    "lectureAttendance": 4,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 78,
@@ -3080,7 +3080,7 @@
     "grade": "F",
     "totalPoints": 24,
     "homeworkPoints": 18,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 79,
@@ -3120,7 +3120,7 @@
     "grade": "F",
     "totalPoints": 2,
     "homeworkPoints": 0,
-    "lectureAttendance": 0,
+    "lectureAttendance": 2,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 80,
@@ -3154,7 +3154,7 @@
     "grade": "F",
     "totalPoints": 11,
     "homeworkPoints": 5,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 81,
@@ -3194,7 +3194,7 @@
     "grade": "F",
     "totalPoints": 20,
     "homeworkPoints": 16,
-    "lectureAttendance": 2,
+    "lectureAttendance": 4,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 82,
@@ -3234,7 +3234,7 @@
     "grade": "F",
     "totalPoints": 25,
     "homeworkPoints": 18,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 1,
     "raw": {
       "__EMPTY": 83,
@@ -3275,7 +3275,7 @@
     "grade": "F",
     "totalPoints": 19,
     "homeworkPoints": 13,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 84,
@@ -3315,8 +3315,8 @@
     "grade": "F",
     "totalPoints": 27,
     "homeworkPoints": 18,
-    "lectureAttendance": 2,
-    "activityPoints": 1,
+    "lectureAttendance": 6,
+    "activityPoints": 3,
     "raw": {
       "__EMPTY": 85,
       "známka": "F",
@@ -3358,7 +3358,7 @@
     "grade": "F",
     "totalPoints": 23,
     "homeworkPoints": 17,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 86,
@@ -3398,7 +3398,7 @@
     "grade": "F",
     "totalPoints": 21,
     "homeworkPoints": 15,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 87,
@@ -3438,7 +3438,7 @@
     "grade": "F",
     "totalPoints": 23,
     "homeworkPoints": 17,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 88,
@@ -3478,7 +3478,7 @@
     "grade": "F",
     "totalPoints": 26,
     "homeworkPoints": 20,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 89,
@@ -3518,7 +3518,7 @@
     "grade": "F",
     "totalPoints": 17,
     "homeworkPoints": 11,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 90,
@@ -3558,7 +3558,7 @@
     "grade": "F",
     "totalPoints": 20,
     "homeworkPoints": 14,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 91,
@@ -3598,7 +3598,7 @@
     "grade": "F",
     "totalPoints": 4,
     "homeworkPoints": 0,
-    "lectureAttendance": 0,
+    "lectureAttendance": 4,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 92,
@@ -3632,7 +3632,7 @@
     "grade": "F",
     "totalPoints": 22,
     "homeworkPoints": 16,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 93,
@@ -3672,7 +3672,7 @@
     "grade": "F",
     "totalPoints": 22,
     "homeworkPoints": 16,
-    "lectureAttendance": 0,
+    "lectureAttendance": 4,
     "activityPoints": 2,
     "raw": {
       "__EMPTY": 94,
@@ -3714,7 +3714,7 @@
     "grade": "F",
     "totalPoints": 11,
     "homeworkPoints": 7,
-    "lectureAttendance": 2,
+    "lectureAttendance": 4,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 95,
@@ -3751,7 +3751,7 @@
     "grade": "F",
     "totalPoints": 22,
     "homeworkPoints": 15,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 1,
     "raw": {
       "__EMPTY": 96,
@@ -3792,7 +3792,7 @@
     "grade": "F",
     "totalPoints": 24,
     "homeworkPoints": 18,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 97,
@@ -3832,7 +3832,7 @@
     "grade": "F",
     "totalPoints": 19,
     "homeworkPoints": 13,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 98,
@@ -3872,7 +3872,7 @@
     "grade": "F",
     "totalPoints": 15,
     "homeworkPoints": 9,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 99,
@@ -3912,7 +3912,7 @@
     "grade": "F",
     "totalPoints": 21,
     "homeworkPoints": 15,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 100,
@@ -3952,7 +3952,7 @@
     "grade": "F",
     "totalPoints": 12,
     "homeworkPoints": 10,
-    "lectureAttendance": 0,
+    "lectureAttendance": 2,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 101,
@@ -3989,8 +3989,8 @@
     "grade": "F",
     "totalPoints": 29,
     "homeworkPoints": 20,
-    "lectureAttendance": 2,
-    "activityPoints": 1,
+    "lectureAttendance": 6,
+    "activityPoints": 3,
     "raw": {
       "__EMPTY": 102,
       "známka": "F",
@@ -4032,7 +4032,7 @@
     "grade": "F",
     "totalPoints": 16,
     "homeworkPoints": 14,
-    "lectureAttendance": 0,
+    "lectureAttendance": 2,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 103,
@@ -4072,7 +4072,7 @@
     "grade": "F",
     "totalPoints": 17,
     "homeworkPoints": 13,
-    "lectureAttendance": 0,
+    "lectureAttendance": 4,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 104,
@@ -4112,7 +4112,7 @@
     "grade": "F",
     "totalPoints": 15,
     "homeworkPoints": 9,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 105,
@@ -4152,8 +4152,8 @@
     "grade": "F",
     "totalPoints": 26,
     "homeworkPoints": 17,
-    "lectureAttendance": 2,
-    "activityPoints": 1,
+    "lectureAttendance": 6,
+    "activityPoints": 3,
     "raw": {
       "__EMPTY": 106,
       "známka": "F",
@@ -4195,7 +4195,7 @@
     "grade": "F",
     "totalPoints": 18,
     "homeworkPoints": 12,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 107,
@@ -4235,7 +4235,7 @@
     "grade": "F",
     "totalPoints": 21,
     "homeworkPoints": 17,
-    "lectureAttendance": 2,
+    "lectureAttendance": 4,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 108,
@@ -4275,7 +4275,7 @@
     "grade": "F",
     "totalPoints": 23,
     "homeworkPoints": 16,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 1,
     "raw": {
       "__EMPTY": 109,
@@ -4316,7 +4316,7 @@
     "grade": "F",
     "totalPoints": 24,
     "homeworkPoints": 18,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 110,
@@ -4356,7 +4356,7 @@
     "grade": "F",
     "totalPoints": 16,
     "homeworkPoints": 10,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 111,
@@ -4396,7 +4396,7 @@
     "grade": "F",
     "totalPoints": 24,
     "homeworkPoints": 18,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 112,
@@ -4436,7 +4436,7 @@
     "grade": "F",
     "totalPoints": 21,
     "homeworkPoints": 15,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 113,
@@ -4476,7 +4476,7 @@
     "grade": "F",
     "totalPoints": 24,
     "homeworkPoints": 16,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 2,
     "raw": {
       "__EMPTY": 114,
@@ -4518,7 +4518,7 @@
     "grade": "F",
     "totalPoints": 25,
     "homeworkPoints": 18,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 1,
     "raw": {
       "__EMPTY": 115,
@@ -4559,8 +4559,8 @@
     "grade": "F",
     "totalPoints": 28,
     "homeworkPoints": 20,
-    "lectureAttendance": 2,
-    "activityPoints": 1,
+    "lectureAttendance": 6,
+    "activityPoints": 2,
     "raw": {
       "__EMPTY": 116,
       "známka": "F",
@@ -4601,7 +4601,7 @@
     "grade": "F",
     "totalPoints": 16,
     "homeworkPoints": 10,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 117,
@@ -4641,7 +4641,7 @@
     "grade": "F",
     "totalPoints": 17,
     "homeworkPoints": 11,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 118,
@@ -4681,7 +4681,7 @@
     "grade": "F",
     "totalPoints": 21,
     "homeworkPoints": 15,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 119,
@@ -4721,7 +4721,7 @@
     "grade": "F",
     "totalPoints": 15,
     "homeworkPoints": 9,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 0,
     "raw": {
       "__EMPTY": 120,
@@ -4761,7 +4761,7 @@
     "grade": "F",
     "totalPoints": 25,
     "homeworkPoints": 18,
-    "lectureAttendance": 2,
+    "lectureAttendance": 6,
     "activityPoints": 1,
     "raw": {
       "__EMPTY": 121,

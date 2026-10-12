@@ -7,7 +7,7 @@ async function updateData() {
     try {
         console.log('Загрузка списка пользователей из users.txt...');
         const usersRaw = fs.readFileSync('users.txt', 'utf-8');
-        
+
         // Разбираем users.txt по строкам (Имя | Специальность)
         const usersList = usersRaw
             .split('\n')
@@ -36,26 +36,42 @@ async function updateData() {
         const workbook = XLSX.read(arrayBuffer, { type: 'array' });
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
-        
+
         const rawJsonData = XLSX.utils.sheet_to_json(worksheet);
 
         // Отбираем только строки студентов (где __EMPTY является числом 1, 2, ..., 121)
         const studentRows = rawJsonData.filter(row => typeof row.__EMPTY === 'number');
 
         // Сопоставляем порядок из .xlsx с порядком в users.txt
-        const resultData = studentRows.map((row, index) => {
-            const userMeta = usersList[index] || { name: 'Неизвестно', studyProgram: 'N/A' };
+        // const resultData = studentRows.map((row, index) => {
+        //     const userMeta = usersList[index] || { name: 'Неизвестно', studyProgram: 'N/A' };
+
+        //     return {
+        //         id: row.__EMPTY,
+        //         name: userMeta.name,
+        //         studyProgram: userMeta.studyProgram,
+        //         grade: row.známka || 'F',
+        //         totalPoints: row.spolu || 0,
+        //         homeworkPoints: row.body || 0,
+        //         lectureAttendance: row.prednášky || 0,
+        //         activityPoints: row.__EMPTY_27 || row.__EMPTY_3 || 0,
+        //         // Сохраняем исходные поля XLSX для работы с детальными заданиями по неделям
+        //         raw: row
+        //     };
+        // });
+        const resultData = studentRows.map((row) => {
+            const studentId = Number(row.__EMPTY);
+            const userMeta = usersList[studentId - 1] || { name: 'Неизвестно', studyProgram: 'N/A' };
 
             return {
-                id: row.__EMPTY,
+                id: studentId,
                 name: userMeta.name,
                 studyProgram: userMeta.studyProgram,
                 grade: row.známka || 'F',
                 totalPoints: row.spolu || 0,
                 homeworkPoints: row.body || 0,
-                lectureAttendance: row.prednášky || 0,
-                activityPoints: row.__EMPTY_27 || row.__EMPTY_3 || 0,
-                // Сохраняем исходные поля XLSX для работы с детальными заданиями по неделям
+                lectureAttendance: Number(row.__EMPTY_2) || 0,
+                activityPoints: Number(row.__EMPTY_3) || 0,
                 raw: row
             };
         });

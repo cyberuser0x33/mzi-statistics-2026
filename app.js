@@ -519,8 +519,12 @@ function updateSidebarAndStats(students) {
     if (students.length === 0) return;
 
     const totalCount = students.length;
-    const totals = students.map(s => s.totalPoints || 0);
-    const avg = (totals.reduce((a, b) => a + b, 0) / totalCount).toFixed(1);
+    const weeklyTotals = students.map(s => {
+        const raw = s.raw || {};
+        return activeWeekObj.keys.reduce((sum, key) => sum + (Number(raw[key]) || 0), 0);
+    });
+
+    const avg = (weeklyTotals.reduce((a, b) => a + b, 0) / totalCount).toFixed(1);
 
     let countLowScore = 0;
     let countPerfectScore = 0;
@@ -649,8 +653,57 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
     });
 });
 
+// function handleSearch(e) {
+//     const query = e.target.value.toLowerCase().trim();
+//     const filtered = allStudents.filter(s =>
+//         s.name.toLowerCase().includes(query) ||
+//         (s.studyProgram && s.studyProgram.toLowerCase().includes(query)) ||
+//         s.id.toString().includes(query)
+//     );
+//     renderStudents(filtered);
+
+    
+// }
+
+
+function renderEasterEgg() {
+    const container = document.getElementById('students-container');
+    const dict = i18n[currentLang];
+    
+    document.getElementById('showing-count').innerText = `${dict.showingCount} 1`;
+
+    // Генерируем набор зелёных кружков с символом бесконечности ∞
+    const infinityBadges = Array(25).fill(
+        `<div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center font-bold text-sm sm:text-base bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shadow-sm shadow-emerald-500/20 shrink-0">∞</div>`
+    ).join('');
+
+    container.innerHTML = `
+        <div class="bg-slate-800/90 border border-slate-700/80 hover:border-slate-600 rounded-xl p-2.5 transition duration-200 shadow-lg flex items-center justify-between gap-3 overflow-hidden">
+            
+            <!-- Аватарка favicon-96x96.png и имя -->
+            <div class="flex items-center gap-3 shrink-0">
+                <img src="img/favicon-96x96.png" alt="Stano Krajči" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover border border-slate-700 sharp-img shrink-0">
+                <div class="min-w-0">
+                    <h3 class="text-sm sm:text-base font-bold text-white truncate">
+                        Stano Krajči
+                    </h3>
+                </div>
+            </div>
+            <div class="flex items-center gap-1.5 overflow-hidden flex-1 justify-end">
+                ${infinityBadges}
+            </div>
+
+        </div>
+    `;
+}
+
 function handleSearch(e) {
     const query = e.target.value.toLowerCase().trim();
+    if (query === '666') {
+        renderEasterEgg();
+        return;
+    }
+
     const filtered = allStudents.filter(s =>
         s.name.toLowerCase().includes(query) ||
         (s.studyProgram && s.studyProgram.toLowerCase().includes(query)) ||
