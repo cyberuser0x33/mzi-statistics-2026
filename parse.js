@@ -102,3 +102,5 @@ async function updateData() {
 }
 
 updateData();
+
+process.exit(0);
