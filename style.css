@@ -10,6 +10,14 @@ body {
     image-rendering: crisp-edges;
 }
 
+
+.tiger-emoji {
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+    display: inline-block;
+    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.3));
+    margin-right: 0.2rem;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
     width: 5px;

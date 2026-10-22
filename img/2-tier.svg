@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 400" role="img" aria-labelledby="title desc">
+  <title id="title">Медаль за второе место</title>
+  <desc id="desc">Минималистичная векторная серебряная медаль с синей розеткой и золотым ободком.</desc>
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0a0"/><stop offset=".35" stop-color="#d8a52d"/><stop offset=".62" stop-color="#ffdf62"/><stop offset="1" stop-color="#9e6c10"/></linearGradient>
+    <linearGradient id="silver" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".48" stop-color="#c8c8cd"/><stop offset="1" stop-color="#85858d"/></linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#00caff"/><stop offset=".55" stop-color="#0876d5"/><stop offset="1" stop-color="#004d9f"/></linearGradient>
+    <clipPath id="ring"><circle cx="180" cy="222" r="155"/></clipPath>
+  </defs>
+  <!-- hanging loop -->
+  <path d="M145 66 160 17Q180 -5 200 17L215 66Z" fill="url(#gold)" stroke="#9e761a" stroke-width="2.5"/>
+  <circle cx="180" cy="27" r="10.5" fill="#fff" stroke="#9e761a" stroke-width="3"/>
+  <!-- outer rim -->
+  <circle cx="180" cy="222" r="174" fill="url(#gold)" stroke="#9b7118" stroke-width="2"/>
+  <circle cx="180" cy="222" r="164" fill="#f5d65d" stroke="#fff0a0" stroke-width="2"/>
+  <circle cx="180" cy="222" r="155" fill="url(#blue)"/>
+  <!-- broad rays, kept simple for small-size clarity -->
+  <g clip-path="url(#ring)" fill="#31d5ff" opacity=".75">
+    <path d="M180 222 155 55 180 55Z"/><path d="M180 222 155 55 180 55Z" transform="rotate(18 180 222)"/>
+    <path d="M180 222 155 55 180 55Z" transform="rotate(36 180 222)"/><path d="M180 222 155 55 180 55Z" transform="rotate(54 180 222)"/>
+    <path d="M180 222 155 55 180 55Z" transform="rotate(72 180 222)"/><path d="M180 222 155 55 180 55Z" transform="rotate(90 180 222)"/>
+    <path d="M180 222 155 55 180 55Z" transform="rotate(108 180 222)"/><path d="M180 222 155 55 180 55Z" transform="rotate(126 180 222)"/>
+    <path d="M180 222 155 55 180 55Z" transform="rotate(144 180 222)"/><path d="M180 222 155 55 180 55Z" transform="rotate(162 180 222)"/>
+    <path d="M180 222 155 55 180 55Z" transform="rotate(180 180 222)"/><path d="M180 222 155 55 180 55Z" transform="rotate(198 180 222)"/>
+    <path d="M180 222 155 55 180 55Z" transform="rotate(216 180 222)"/><path d="M180 222 155 55 180 55Z" transform="rotate(234 180 222)"/>
+    <path d="M180 222 155 55 180 55Z" transform="rotate(252 180 222)"/><path d="M180 222 155 55 180 55Z" transform="rotate(270 180 222)"/>
+    <path d="M180 222 155 55 180 55Z" transform="rotate(288 180 222)"/><path d="M180 222 155 55 180 55Z" transform="rotate(306 180 222)"/>
+    <path d="M180 222 155 55 180 55Z" transform="rotate(324 180 222)"/><path d="M180 222 155 55 180 55Z" transform="rotate(342 180 222)"/>
+  </g>
+  <circle cx="180" cy="222" r="118" fill="url(#silver)" stroke="#f7f7f8" stroke-width="5"/>
+  <circle cx="180" cy="222" r="108" fill="none" stroke="#6f7077" stroke-width="3"/>
+  <!-- simplified laurel sprigs -->
+  <g fill="#f8f8fa" stroke="#85858d" stroke-width="1.5">
+    <path d="M101 286Q72 273 76 250Q94 255 101 286Z"/><path d="M95 257Q68 240 77 219Q94 226 95 257Z"/><path d="M94 226Q72 204 87 187Q101 199 94 226Z"/><path d="M102 197Q86 171 106 159Q116 175 102 197Z"/>
+    <path d="M259 286Q288 273 284 250Q266 255 259 286Z"/><path d="M265 257Q292 240 283 219Q266 226 265 257Z"/><path d="M266 226Q288 204 273 187Q259 199 266 226Z"/><path d="M258 197Q274 171 254 159Q244 175 258 197Z"/>
+  </g>
+  <circle cx="180" cy="222" r="69" fill="#b8b8be" stroke="#f5f5f7" stroke-width="3"/>
+  <text x="180" y="250" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="91" font-weight="700" fill="#f8f8fa" stroke="#74747b" stroke-width="1.5" paint-order="stroke" >2</text>
+</svg>
